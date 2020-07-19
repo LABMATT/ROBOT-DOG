@@ -45,13 +45,12 @@ int L_3A;
 int L_3B;
 int L_3C;
 
-#define L3Aenable 10
-#define L3Appwm 30
-#define L3Bn 31
+#define L3enable 42
+#define L3Apwm 10
+#define L3An 27 
 
-#define L3Benable 11
-#define L3BpApwm 32
-#define L3Bn 33
+#define L3Bpwm 11
+#define L3Bn 26
 
 float L_3_Lenth;
 Servo servo_Leg_3;
@@ -94,11 +93,10 @@ pinMode(L2Bn, OUTPUT);
 pinMode(L2Bpwm, OUTPUT);
 pinMode(L2Bn, OUTPUT);
 
-pinMode(L3Aenable, OUTPUT);
-pinMode(L3Appwm, OUTPUT);
+pinMode(L3enable, OUTPUT);
+pinMode(L3Apwm, OUTPUT);
 pinMode(L3Bn, OUTPUT);
-pinMode(L3Benable, OUTPUT);
-pinMode(L3BpApwm, OUTPUT);
+pinMode(L3Bpwm, OUTPUT);
 pinMode(L3Bn, OUTPUT);
 
 Serial.begin(9600);
@@ -116,7 +114,9 @@ Serial.println("working");
 
 void testmotor()
 {
- LEG1verification();
+ //LEG1verification();
+ LEG3verification();
+
  // LEG2verification();
   // LEG4verification();
 }
