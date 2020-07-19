@@ -13,13 +13,13 @@ int L_1A;
 int L_1B;
 int L_1C;
 
-#define L1Aenable 22
-#define L1Appwm 6
-#define L1An 23
+#define L1enable 40
 
-#define L1Benable 24
-#define L1Bppwm 7
-#define L1Bn 25
+#define L1Apwm 6
+#define L1An 31
+
+#define L1Bpwm 7
+#define L1Bn 30
 
 float L_1_Lenth;
 Servo servo_Leg_1;
@@ -82,11 +82,10 @@ servo_Leg_2.attach(3);
 servo_Leg_3.attach(4);
 servo_Leg_4.attach(5);
 
-pinMode(L1Aenable, OUTPUT);
-pinMode(L1Appwm, OUTPUT);
-pinMode(L1Benable, OUTPUT);
+pinMode(L1enable, OUTPUT);
+pinMode(L1Apwm, OUTPUT);
 pinMode(L1Bn , OUTPUT);
-pinMode(L1Bppwm, OUTPUT);
+pinMode(L1Bpwm, OUTPUT);
 pinMode(L1Bn, OUTPUT);
 
 pinMode(L2enable, OUTPUT);
@@ -117,7 +116,7 @@ Serial.println("working");
 
 void testmotor()
 {
- //LEG1verification();
-  LEG2verification();
+ LEG1verification();
+ // LEG2verification();
   // LEG4verification();
 }

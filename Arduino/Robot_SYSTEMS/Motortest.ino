@@ -1,11 +1,11 @@
 void LEG1verification()
 {
-  digitalWrite(L1Aenable, HIGH);
+  //digitalWrite(L1enable, HIGH);
   
-  analogWrite(L1Appwm, 60);  
-  analogWrite(L1Bppwm, 60);
+  //analogWrite(L1Apwm, 60);  
+  analogWrite(L1Bpwm, 60);
 
-  digitalWrite(L1An, HIGH);
+  //digitalWrite(L1An, HIGH);
   digitalWrite(L1Bn, HIGH);
 }
 
