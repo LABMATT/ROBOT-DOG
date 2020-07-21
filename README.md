@@ -2,9 +2,9 @@
 A protype and built, programed and tested by matthew lewington for systems engerreing subject.
 
 Contacts:
-Twitter: @LABMATTs
-Email: labmattcontact@gmail.com
-Website: www.labmatt.space
+- Twitter: @LABMATTs
+- Email: labmattcontact@gmail.com
+- Website: www.labmatt.space
 
 This project has a number of componet that will make there way here though many means.
 
