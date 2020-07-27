@@ -7,7 +7,7 @@ namespace RCMS
         static void Main(string[] args)
         {
 
-    Console.WriteLine("Hello World!");
+    Console.WriteLine("Hellow World PRD! Softwere is starting.");
     SerialManger sm = new SerialManger();
 
     sm.getSerial();
