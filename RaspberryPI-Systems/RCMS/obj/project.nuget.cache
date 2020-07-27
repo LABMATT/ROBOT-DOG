@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "uLn2PbARtaUU/3Y/lI/4qVqxe5MfZxMF/Xb7n0xDFd+5xlx4IyrP0fSvKh1xF7I+dxFBOQMYqzBM1cpNcN9bpw==",
+  "success": true,
+  "projectFilePath": "/home/matthew/Documents/Projects/PRD-git/ROBOT-DOG/RaspberryPI-Systems/RCMS/RCMS.csproj",
+  "expectedPackageFiles": [
+    "/root/.nuget/packages/microsoft.netcore.platforms/3.1.0/microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "/root/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "/root/.nuget/packages/runtime.linux-arm.runtime.native.system.io.ports/4.7.0/runtime.linux-arm.runtime.native.system.io.ports.4.7.0.nupkg.sha512",
+    "/root/.nuget/packages/runtime.linux-arm64.runtime.native.system.io.ports/4.7.0/runtime.linux-arm64.runtime.native.system.io.ports.4.7.0.nupkg.sha512",
+    "/root/.nuget/packages/runtime.linux-x64.runtime.native.system.io.ports/4.7.0/runtime.linux-x64.runtime.native.system.io.ports.4.7.0.nupkg.sha512",
+    "/root/.nuget/packages/runtime.native.system.io.ports/4.7.0/runtime.native.system.io.ports.4.7.0.nupkg.sha512",
+    "/root/.nuget/packages/runtime.osx-x64.runtime.native.system.io.ports/4.7.0/runtime.osx-x64.runtime.native.system.io.ports.4.7.0.nupkg.sha512",
+    "/root/.nuget/packages/system.io.ports/4.7.0/system.io.ports.4.7.0.nupkg.sha512",
+    "/root/.nuget/packages/system.security.accesscontrol/4.7.0/system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "/root/.nuget/packages/system.security.principal.windows/4.7.0/system.security.principal.windows.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
