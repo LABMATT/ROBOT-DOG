@@ -8,9 +8,13 @@ namespace RCMS
         {
 
     Console.WriteLine("Hellow World PRD! Softwere is starting.");
-    SerialManger sm = new SerialManger();
+    
+    SignalRChat signal = new SignalRChat();
+    signal.Startup();
+    
+    //SerialManger sm = new SerialManger();
 
-    sm.getSerial();
+    //sm.getSerial();
 
         }
     }
