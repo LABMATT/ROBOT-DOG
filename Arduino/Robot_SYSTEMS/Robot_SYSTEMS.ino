@@ -143,8 +143,11 @@ Serial.begin(9600);
 void loop() {
   // put your main code here, to run repeatedly:
 
+digitalWrite(L4enable, HIGH);
+analogWrite(L4Bpwm, 60);
+digitalWrite(L4Bn, LOW);
 
-  testmotor();
+  //testmotor();
 Serial.println("working");
 }
 
