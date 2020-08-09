@@ -1,14 +1,16 @@
 #include <Servo.h>
 
 //FOOT SENSOR BLOCK
-#define L_1_sensor 53
-#define L_2_sensor 52
-#define L_3_sensor 51
-#define L_4_sensor 50
+#define L_1_sensor 35
+#define L_2_sensor 34
+#define L_3_sensor 33
+#define L_4_sensor 32
 
 // LEG-Axis-Postive/negative-pwm/nopwm
 
 // #### LEG 1 ##############################################
+float L_1_Lenth;
+
 int L_1A;
 int L_1B;
 int L_1C;
@@ -25,7 +27,6 @@ int L_1C;
 #define L1Bpot A2
 #define L1Cpot A3
 
-float L_1_Lenth;
 Servo servo_Leg_1;
 
 // #### LEG 2 ##############################################
