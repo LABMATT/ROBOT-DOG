@@ -8,6 +8,14 @@
 
 // LEG-Axis-Postive/negative-pwm/nopwm
 
+// #### INDICATORS #########################
+#define powLED 19
+#define emgLED 23
+#define emgBut 22
+
+boolean enleg = false;
+
+
 // #### LEG 1 ##############################################
 float L_1_Lenth;
 
@@ -95,11 +103,15 @@ int brightness = 0;    // how bright the LED is
 int fadeAmount = 5;    // how many points to fade the LED by
 
 void setup() {
+pinMode(powLED, OUTPUT);
+pinMode(emgLED, OUTPUT);
+pinMode(emgBut, INPUT_PULLUP);
 
-servo_Leg_1.attach(2);
-servo_Leg_2.attach(3);
-servo_Leg_3.attach(4);
-servo_Leg_4.attach(5);
+digitalWrite(powLED, HIGH);
+digitalWrite(emgLED, HIGH);
+delay(2000);
+digitalWrite(powLED, LOW);
+
 
 pinMode(L1enable, OUTPUT);
 pinMode(L1Apwm, OUTPUT);
@@ -139,17 +151,15 @@ pinMode(L4Cpot, INPUT);
 
 Serial.begin(9600);
 
+piWD();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  emgSTOP();
+  Serial.println("mainlop");
 
-digitalWrite(L4enable, HIGH);
-analogWrite(L4Bpwm, 60);
-digitalWrite(L4Bn, LOW);
 
   //testmotor();
-Serial.println("working");
 }
 
 
