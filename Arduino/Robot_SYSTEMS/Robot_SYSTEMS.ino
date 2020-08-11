@@ -9,9 +9,9 @@
 // LEG-Axis-Postive/negative-pwm/nopwm
 
 // #### INDICATORS #########################
-#define powLED 19
+#define powLED 22
 #define emgLED 23
-#define emgBut 22
+#define emgBut 19
 
 boolean enleg = false;
 
@@ -36,6 +36,7 @@ int L_1C;
 #define L1Cpot A3
 
 Servo servo_Leg_1;
+short l1constraint[3] = {0, 90, 180};
 
 // #### LEG 2 ##############################################
 int L_2A;
@@ -107,11 +108,12 @@ pinMode(powLED, OUTPUT);
 pinMode(emgLED, OUTPUT);
 pinMode(emgBut, INPUT_PULLUP);
 
+attachInterrupt(digitalPinToInterrupt(emgBut), emgSTOPint, FALLING);
+
 digitalWrite(powLED, HIGH);
 digitalWrite(emgLED, HIGH);
 delay(2000);
 digitalWrite(powLED, LOW);
-
 
 pinMode(L1enable, OUTPUT);
 pinMode(L1Apwm, OUTPUT);
@@ -151,15 +153,26 @@ pinMode(L4Cpot, INPUT);
 
 Serial.begin(9600);
 
+
 piWD();
+enableLegs(true);
 }
-
+int pos = 0;    // variable to store the servo position
 void loop() {
-  emgSTOP();
-  Serial.println("mainlop");
+ emgSTOP();
+ Serial.println("mainlop");
 
 
-  //testmotor();
+
+lcservos(1, 40);
+delay(1500);
+lcservos(1, 90);
+delay(1500);
+lcservos(1, 130);
+delay(1500);
+lcservos(1, 90);
+delay(1500);
+
 }
 
 
