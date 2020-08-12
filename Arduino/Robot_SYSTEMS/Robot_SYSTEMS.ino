@@ -156,6 +156,7 @@ Serial.begin(9600);
 
 piWD();
 enableLegs(true);
+
 }
 int pos = 0;    // variable to store the servo position
 void loop() {
@@ -163,15 +164,26 @@ void loop() {
  Serial.println("mainlop");
 
 
+if(false == true)
+{
+  cal();
+} else
+{
+lcservos(1, 60);
+lcservos(2, 60);
+delay(1500);
+lcservos(1, 90);
+lcservos(2, 90);
+delay(1500);
+lcservos(1, 120);
+lcservos(2, 120);
+delay(1500);
+lcservos(1, 90);
+lcservos(2, 90);
+delay(1500);
+}
 
-lcservos(1, 40);
-delay(1500);
-lcservos(1, 90);
-delay(1500);
-lcservos(1, 130);
-delay(1500);
-lcservos(1, 90);
-delay(1500);
+analogRead(L1Bpot);
 
 }
 

@@ -69,16 +69,39 @@ void lcservos(int leg, int pos)
   switch(leg)
   {
     case 1:
-  //  pos = (pos > l1constraint[2]) ? l1constraint[2] : pos;
+ //  pos = (pos > l1constraint[2]) ? l1constraint[2] : pos;
  //   pos = (pos < l1constraint[0]) ? l1constraint[0] : pos;
     servo_Leg_1.write(pos);
     break;
-    break;
+    
     case 2:
+ //  pos = (pos > l1constraint[2]) ? l1constraint[2] : pos;
+ //   pos = (pos < l1constraint[0]) ? l1constraint[0] : pos;
+    servo_Leg_2.write(pos);
     break;
+    
     case 3:
+ //  pos = (pos > l1constraint[2]) ? l1constraint[2] : pos;
+ //   pos = (pos < l1constraint[0]) ? l1constraint[0] : pos;
+    servo_Leg_3.write(pos);
     break;
+    
     case 4:
+ //  pos = (pos > l1constraint[2]) ? l1constraint[2] : pos;
+ //   pos = (pos < l1constraint[0]) ? l1constraint[0] : pos;
+    servo_Leg_4.write(pos);
     break;
   }
+}
+
+
+void cal()
+{
+  Serial.println("Make sure all servo mounts are disconnected and motors are clear.");
+  lcservos(1, 90);
+  lcservos(2, 90);
+  lcservos(3, 90);  
+  lcservos(4, 90);
+
+
 }
