@@ -45,3 +45,29 @@ a.trim();
  }
   }
 }
+
+
+// Wait for commands from pi
+void picom() 
+{
+
+  int code = 0;
+  if(Serial.available() > 0)
+  {
+    code = Serial.parseInt();
+
+    switch(code)
+    {
+      case 101:
+      emsDIG = true;
+      emgSTOP();
+      break;
+      case 102:
+      emsDIG = false;
+      break;
+    }
+  }
+
+  Serial.print("code: ");
+  Serial.println(code);
+}

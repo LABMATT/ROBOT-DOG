@@ -14,6 +14,7 @@
 #define emgBut 19
 
 boolean enleg = false;
+boolean emsDIG = false;
 
 
 // #### LEG 1 ##############################################
@@ -158,16 +159,29 @@ piWD();
 enableLegs(true);
 
 }
-int pos = 0;    // variable to store the servo position
+
+
 void loop() {
  emgSTOP();
  Serial.println("mainlop");
 
+picom();
+cal();
 
-if(false == true)
+analogRead(L1Bpot);
+}
+
+
+void testmotor()
 {
-  cal();
-} else
+ LEG1verification();
+ LEG3verification();
+ LEG2verification();
+ LEG4verification();
+}
+
+
+void servoalign()
 {
 lcservos(1, 60);
 lcservos(2, 60);
@@ -181,17 +195,4 @@ delay(1500);
 lcservos(1, 90);
 lcservos(2, 90);
 delay(1500);
-}
-
-analogRead(L1Bpot);
-
-}
-
-
-void testmotor()
-{
- LEG1verification();
- LEG3verification();
- LEG2verification();
- LEG4verification();
 }

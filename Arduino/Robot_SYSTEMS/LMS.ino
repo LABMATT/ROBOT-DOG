@@ -43,18 +43,19 @@ void emgSTOPint()
 void emgSTOP()
 {
   
-  if(digitalRead(emgBut) == LOW)
+  if(digitalRead(emgBut) == LOW || emsDIG == true)
   {
 Serial.println("EMG_STOP");
 
 enableLegs(false);
 
-while(digitalRead(emgBut) == LOW)
+while(digitalRead(emgBut) == LOW || emsDIG == true)
 {
   digitalWrite(emgLED, LOW);
   delay(650);
   digitalWrite(emgLED, HIGH);
   delay(100);
+  picom();
 }
 Serial.println("SYS_ONLINE");
 enableLegs(true);
