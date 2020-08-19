@@ -1,5 +1,6 @@
 const SerialPort = require('serialport')
 const { read } = require('fs')
+require("WebService/webpage.js");
 
 const readline = require('readline');
 
@@ -11,9 +12,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-
-
-const port = new SerialPort('/dev/ttyACM0', {
+const port = new SerialPort('COM6', {
   baudRate: 9600
 })
 
@@ -36,6 +35,8 @@ port.on('open', function() {
 read.on('true', function()
 {
   console.log("Starting RCMS functions");
+
+  
 
   while(end == false)
   {
