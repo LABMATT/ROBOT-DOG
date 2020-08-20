@@ -214,7 +214,7 @@ delay(1500);
 
 void pop()
 {
-  int pot = analogRead(L1Apot);
+ int pot = analogRead(L1Apot);
  Input = pot;
  myPID.Compute();
  Serial.println(pot);
