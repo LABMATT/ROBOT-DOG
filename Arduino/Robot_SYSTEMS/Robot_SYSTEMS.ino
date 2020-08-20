@@ -1,4 +1,6 @@
 #include <Servo.h>
+#include <PID_v1.h>
+
 
 //FOOT SENSOR BLOCK
 #define L_1_sensor 35
@@ -15,7 +17,6 @@
 
 boolean enleg = false;
 boolean emsDIG = false;
-
 
 // #### LEG 1 ##############################################
 float L_1_Lenth;
@@ -37,7 +38,14 @@ int L_1C;
 #define L1Cpot A3
 
 Servo servo_Leg_1;
-short l1constraint[3] = {0, 90, 180};
+
+//Define Variables we'll be connecting to
+double Setpoint, Input, Output;
+ 
+//Specify the links and initial tuning parameters
+//p first, how far from thing
+double Kp=0.9, Ki=0, Kd=0;
+PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
 
 // #### LEG 2 ##############################################
 int L_2A;
@@ -158,6 +166,12 @@ Serial.begin(9600);
 piWD();
 enableLegs(true);
 
+
+
+ Setpoint = 500;
+ 
+ //turn the PID on
+ myPID.SetMode(AUTOMATIC);
 }
 
 
@@ -168,7 +182,8 @@ void loop() {
 picom();
 cal();
 
-analogRead(L1Bpot);
+pop();
+//delay(100);
 }
 
 
@@ -195,4 +210,26 @@ delay(1500);
 lcservos(1, 90);
 lcservos(2, 90);
 delay(1500);
+}
+
+void pop()
+{
+  int pot = analogRead(L1Apot);
+ Input = pot;
+ myPID.Compute();
+ Serial.println(pot);
+ Serial.println(Output);
+
+if(pot < 500)
+{
+   analogWrite(L1Apwm, Output);
+digitalWrite(L1An, LOW);
+Serial.println("1");
+}
+if(pot > 500)
+{
+   analogWrite(L1Apwm, 255 - Output);
+digitalWrite(L1An, HIGH);
+Serial.println("2");
+}
 }

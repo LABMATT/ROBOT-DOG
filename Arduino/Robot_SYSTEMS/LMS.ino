@@ -103,6 +103,40 @@ void cal()
   lcservos(2, 90);
   lcservos(3, 90);  
   lcservos(4, 90);
+}
 
 
+void vectorLeg(int leg, int part)
+{
+analogWrite(L1Apwm, 70);
+digitalWrite(L1An, LOW);
+
+analogWrite(L2Apwm, 70);
+digitalWrite(L2An, LOW);
+
+
+analogWrite(L3Apwm, 70);
+digitalWrite(L3An, LOW);
+
+
+analogWrite(L4Apwm, 70);
+digitalWrite(L4An, LOW);
+
+delay(500);
+
+analogWrite(L1Apwm, 255 - 70);
+digitalWrite(L1An, HIGH);
+
+analogWrite(L2Apwm, 255 - 70);
+digitalWrite(L2An, HIGH);
+
+
+analogWrite(L3Apwm, 255 -70);
+digitalWrite(L3An, HIGH);
+
+
+analogWrite(L4Apwm, 255 -70);
+digitalWrite(L4An, HIGH);
+
+delay(500); 
 }
