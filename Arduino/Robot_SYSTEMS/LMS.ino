@@ -56,6 +56,8 @@ while(digitalRead(emgBut) == LOW || emsDIG == true)
   digitalWrite(emgLED, HIGH);
   delay(100);
   picom();
+  Serial.print("pot is: ");
+  Serial.println(analogRead(L1Apot));
 }
 Serial.println("SYS_ONLINE");
 enableLegs(true);

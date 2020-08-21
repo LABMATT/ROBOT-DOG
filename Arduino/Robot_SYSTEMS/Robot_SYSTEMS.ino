@@ -212,24 +212,33 @@ lcservos(2, 90);
 delay(1500);
 }
 
+int pot;
+
 void pop()
 {
- int pot = analogRead(L1Apot);
- Input = pot;
- myPID.Compute();
- Serial.println(pot);
- Serial.println(Output);
-
+pot = analogRead(L1Apot);
+  
 if(pot < 500)
 {
-   analogWrite(L1Apwm, Output);
+ Input = pot;
+ myPID.Compute();
+ Serial.println("1");
+ Serial.println(pot);
+ Serial.println(Output);
+analogWrite(L1Apwm, Output);
 digitalWrite(L1An, LOW);
-Serial.println("1");
+
 }
 if(pot > 500)
 {
-   analogWrite(L1Apwm, 255 - Output);
+  
+ Input = 1023 - pot;
+ myPID.Compute();
+ Serial.println("2");
+ Serial.println(pot);
+ Serial.println(Output);
+ analogWrite(L1Apwm, 255 - Output);
 digitalWrite(L1An, HIGH);
-Serial.println("2");
+
 }
 }
