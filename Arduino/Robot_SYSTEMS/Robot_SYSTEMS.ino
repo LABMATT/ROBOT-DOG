@@ -17,6 +17,7 @@
 
 boolean enleg = false;
 boolean emsDIG = false;
+int play = 10;
 
 // #### LEG 1 ##############################################
 float L_1_Lenth;
@@ -44,7 +45,10 @@ double Setpoint, Input, Output;
  
 //Specify the links and initial tuning parameters
 //p first, how far from thing
-double Kp=0.9, Ki=0, Kd=0;
+// Kp = 1
+// Ki = 0.1
+// Kd = 0.25
+double Kp=0.2, Ki=1, Kd=1;
 PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
 
 // #### LEG 2 ##############################################
@@ -217,28 +221,33 @@ int pot;
 void pop()
 {
 pot = analogRead(L1Apot);
-  
-if(pot < 500)
+
+
+if(pot < 500 - play)
 {
  Input = pot;
- myPID.Compute();
+ if(myPID.Compute() == true)
+ {
  Serial.println("1");
  Serial.println(pot);
  Serial.println(Output);
-analogWrite(L1Apwm, Output);
-digitalWrite(L1An, LOW);
-
-}
-if(pot > 500)
+ analogWrite(L1Apwm, Output);
+ digitalWrite(L1An, LOW);
+ }
+} else if(pot > 500 + play)
 {
-  
  Input = 1023 - pot;
- myPID.Compute();
+ if(myPID.Compute() == true)
+ {
  Serial.println("2");
  Serial.println(pot);
  Serial.println(Output);
  analogWrite(L1Apwm, 255 - Output);
-digitalWrite(L1An, HIGH);
-
+ digitalWrite(L1An, HIGH);
+ }
+} else
+{
+ analogWrite(L1Apwm, 0);
+ digitalWrite(L1An, LOW);
 }
 }
