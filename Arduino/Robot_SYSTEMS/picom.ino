@@ -68,6 +68,15 @@ void picom()
     }
   }
 
-  Serial.print("code: ");
-  Serial.println(code);
+  //Serial.print("code: ");
+  //Serial.println(code);
+}
+
+
+// Send the values of the pots
+void piPot()
+{
+Serial.print("potL1Ap: ");
+Serial.println(L_1Ap);
+Serial.println(analogRead(L1Apot));
 }

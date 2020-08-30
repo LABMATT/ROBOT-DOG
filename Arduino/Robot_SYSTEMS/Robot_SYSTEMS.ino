@@ -22,9 +22,10 @@ int play = 10;
 // #### LEG 1 ##############################################
 float L_1_Lenth;
 
-int L_1A;
-int L_1B;
-int L_1C;
+//Le 1 A-axis Pot reading
+int L_1Ap = 0;
+int L_1B = 0;
+int L_1C = 0;
 
 #define L1enable 40
 
@@ -34,7 +35,7 @@ int L_1C;
 #define L1Bpwm 7
 #define L1Bn 30
 
-#define L1Apot A1
+int L1Apot = A1;
 #define L1Bpot A2
 #define L1Cpot A3
 
@@ -52,9 +53,9 @@ double Kp=0.2, Ki=1, Kd=1;
 PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
 
 // #### LEG 2 ##############################################
-int L_2A;
-int L_2B;
-int L_2C;
+int L_2A = 0;
+int L_2B = 0;
+int L_2C = 0;
 
 #define L2enable 41
 
@@ -73,9 +74,9 @@ float L_2_Lenth;
 Servo servo_Leg_2;
 
 // #### LEG 3 ##############################################
-int L_3A;
-int L_3B;
-int L_3C;
+int L_3A = -1;
+int L_3B = -1;
+int L_3C = -1;
 
 #define L3enable 42
 #define L3Apwm 10
@@ -93,9 +94,9 @@ float L_3_Lenth;
 Servo servo_Leg_3;
 
 // #### LEG 4 ##############################################
-int L_4A;
-int L_4B;
-int L_4C;
+int L_4A = -1;
+int L_4B = -1;
+int L_4C = -1;
 
 #define L4enable 43
 
@@ -181,13 +182,16 @@ enableLegs(true);
 
 void loop() {
  emgSTOP();
- Serial.println("mainlop");
+ //Serial.println("mainlop");
 
 picom();
-cal();
+//cal();
 
-pop();
+//pop();
 //delay(100);
+
+potVale(1, 'A');
+piPot();
 }
 
 

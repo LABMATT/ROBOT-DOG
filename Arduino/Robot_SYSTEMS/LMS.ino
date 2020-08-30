@@ -142,3 +142,47 @@ digitalWrite(L4An, HIGH);
 
 delay(500); 
 }
+
+
+
+//Returns the port value of the leg. 
+int potVale(int leg, char axis)
+{
+
+int avrage[5];
+int pot;
+int *potPointer;
+  
+  for(int i = 0; i < 5; i++)
+  {
+    switch(leg) 
+    {
+      case 1: 
+      switch(axis)
+      {
+        case 'A':
+        avrage[i] = analogRead(L1Apot);
+        Serial.print("currentAv: ");
+        Serial.println(avrage[i]);
+        potPointer = &L1Apot;
+
+        case 'B':
+        pot = L1Bpot;
+
+        case 'C':
+        pot = L1Cpot;
+        
+      }
+    }
+  }
+
+int fav = ((avrage[0] + avrage[1] + avrage[2] + avrage[3] + avrage[4]) / 5);
+potPointer = fav;
+
+Serial.print("fav: ");
+Serial.println(fav);
+
+Serial.println("done");
+ 
+ return fav;
+}
