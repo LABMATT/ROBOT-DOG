@@ -199,7 +199,15 @@ potRead(2, 'A');
 potRead(2, 'B');
 potRead(2, 'C');
 
-delay(100);
+potRead(3, 'A');
+potRead(3, 'B');
+potRead(3, 'C');
+
+potRead(4, 'A');
+potRead(4, 'B');
+potRead(4, 'C');
+
+//delay(6);
 }
 
 

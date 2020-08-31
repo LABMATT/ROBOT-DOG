@@ -17,10 +17,21 @@ digitalWrite(L1enable, HIGH);
 digitalWrite(L2enable, HIGH);
 digitalWrite(L3enable, HIGH);
 digitalWrite(L4enable, HIGH);
-piupdate("eL1:", true);
-piupdate("eL2:", true);
-piupdate("eL3:", true);
-piupdate("eL4:", true);
+piupdate("eL1A:", true);
+piupdate("eL1B:", true);
+piupdate("eL1C:", true);
+
+piupdate("eL2A:", true);
+piupdate("eL2B:", true);
+piupdate("eL2C:", true);
+
+piupdate("eL3A:", true);
+piupdate("eL3B:", true);
+piupdate("eL3C:", true);
+
+piupdate("eL4A:", true);
+piupdate("eL4B:", true);
+piupdate("eL4C:", true);
 
   } else
   {
@@ -34,10 +45,23 @@ digitalWrite(L1enable, LOW);
 digitalWrite(L2enable, LOW);
 digitalWrite(L3enable, LOW);
 digitalWrite(L4enable, LOW);
-piupdate("eL1:", false);
-piupdate("eL2:", false);
-piupdate("eL3:", false);
-piupdate("eL4:", false);
+
+
+piupdate("eL1A:", false);
+piupdate("eL1B:", false);
+piupdate("eL1C:", false);
+
+piupdate("eL2A:", false);
+piupdate("eL2B:", false);
+piupdate("eL2C:", false);
+
+piupdate("eL3A:", false);
+piupdate("eL3B:", false);
+piupdate("eL3C:", false);
+
+piupdate("eL4A:", false);
+piupdate("eL4B:", false);
+piupdate("eL4C:", false);
 }
 }
 
@@ -56,7 +80,7 @@ void emgSTOP()
   
   if(digitalRead(emgBut) == LOW || emsDIG == true)
   {
-Serial.println("EMG_STOP");
+Serial.println("_EMG_STOP");
 
 enableLegs(false);
 
@@ -67,10 +91,8 @@ while(digitalRead(emgBut) == LOW || emsDIG == true)
   digitalWrite(emgLED, HIGH);
   delay(100);
   picom();
-  Serial.print("pot is: ");
-  Serial.println(analogRead(L1Apot));
+
 }
-Serial.println("SYS_ONLINE");
 enableLegs(true);
 }
 }
@@ -111,7 +133,7 @@ void lcservos(int leg, int pos)
 
 void cal()
 {
-  Serial.println("Make sure all servo mounts are disconnected and motors are clear.");
+  Serial.println("_Make sure all servo mounts are disconnected and motors are clear.");
   lcservos(1, 90);
   lcservos(2, 90);
   lcservos(3, 90);  
