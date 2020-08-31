@@ -192,6 +192,14 @@ picom();
 //delay(100);
 
 potRead(1, 'A');
+potRead(1, 'B');
+potRead(1, 'C');
+
+potRead(2, 'A');
+potRead(2, 'B');
+potRead(2, 'C');
+
+delay(100);
 }
 
 

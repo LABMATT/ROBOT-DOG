@@ -74,14 +74,13 @@ void picom()
 
 
 // Send the values of the pots
-void piPot(String name, int val)
+void piupdate(String name, int val)
 {
 Serial.println(name + val);  
+}
 
-/*
-String potRequest = "pi:" + L1Apot + ":" + L1Bpot + ":" + L1Cpot + ":" + L2Apot + ":" + L2Bpot + ":" + L2Cpot + ":" + L3Apot + ":" + L3Bpot + ":" + L3Cpot + ":" + L4Apot + ":" + L4Bpot + ":" + L4Cpot;
-Serial.print("pi:");
-Serial.print(L1Apot);
-Serial.print(L1Apot);
-*/
+// pi rounds
+void piRounds()
+{
+  
 }

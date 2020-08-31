@@ -17,6 +17,11 @@ digitalWrite(L1enable, HIGH);
 digitalWrite(L2enable, HIGH);
 digitalWrite(L3enable, HIGH);
 digitalWrite(L4enable, HIGH);
+piupdate("eL1:", true);
+piupdate("eL2:", true);
+piupdate("eL3:", true);
+piupdate("eL4:", true);
+
   } else
   {
     
@@ -29,6 +34,10 @@ digitalWrite(L1enable, LOW);
 digitalWrite(L2enable, LOW);
 digitalWrite(L3enable, LOW);
 digitalWrite(L4enable, LOW);
+piupdate("eL1:", false);
+piupdate("eL2:", false);
+piupdate("eL3:", false);
+piupdate("eL4:", false);
 }
 }
 
@@ -38,6 +47,8 @@ void emgSTOPint()
 {
   enableLegs(false); 
 }
+
+
 
 // If emgacny stop button is pressed then activate this funtion apon reaching it in loop.
 void emgSTOP()
@@ -249,15 +260,15 @@ int potRead(int leg, char part)
 
 int reader = 0;
   
-  for(int i = 0; i < 5; i++)
+  for(int i = 0; i < 10; i++)
   {
     reader = reader + analogRead(pot);
   }
 
-reader = reader/5;
+reader = reader/10;
 
   *myPointer = reader;
-   piPot(comName + ":", reader);
+   piupdate(comName + ":", reader);
   
   return reader;
 }
