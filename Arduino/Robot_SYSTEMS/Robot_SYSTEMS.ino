@@ -19,13 +19,15 @@ boolean enleg = false;
 boolean emsDIG = false;
 int play = 10;
 
+boolean picomenb = true;
+
 // #### LEG 1 ##############################################
 float L_1_Lenth;
 
 //Le 1 A-axis Pot reading
 int L_1Ap = 0;
-int L_1B = 0;
-int L_1C = 0;
+int L_1Bp = 0;
+int L_1Cp = 0;
 
 #define L1enable 40
 
@@ -35,7 +37,7 @@ int L_1C = 0;
 #define L1Bpwm 7
 #define L1Bn 30
 
-int L1Apot = A1;
+#define L1Apot A1
 #define L1Bpot A2
 #define L1Cpot A3
 
@@ -53,9 +55,9 @@ double Kp=0.2, Ki=1, Kd=1;
 PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
 
 // #### LEG 2 ##############################################
-int L_2A = 0;
-int L_2B = 0;
-int L_2C = 0;
+int L_2Ap = 0;
+int L_2Bp = 0;
+int L_2Cp = 0;
 
 #define L2enable 41
 
@@ -74,9 +76,9 @@ float L_2_Lenth;
 Servo servo_Leg_2;
 
 // #### LEG 3 ##############################################
-int L_3A = -1;
-int L_3B = -1;
-int L_3C = -1;
+int L_3Ap = 0;
+int L_3Bp = 0;
+int L_3Cp = 0;
 
 #define L3enable 42
 #define L3Apwm 10
@@ -94,9 +96,9 @@ float L_3_Lenth;
 Servo servo_Leg_3;
 
 // #### LEG 4 ##############################################
-int L_4A = -1;
-int L_4B = -1;
-int L_4C = -1;
+int L_4Ap = 500;
+int L_4Bp = 500;
+int L_4Cp = 500;
 
 #define L4enable 43
 
@@ -167,11 +169,10 @@ pinMode(L4Cpot, INPUT);
 
 Serial.begin(9600);
 
-
 piWD();
 enableLegs(true);
 
-
+updateAllPots();
 
  Setpoint = 500;
  
@@ -190,8 +191,7 @@ picom();
 //pop();
 //delay(100);
 
-potVale(1, 'A');
-piPot();
+potRead(1, 'A');
 }
 
 

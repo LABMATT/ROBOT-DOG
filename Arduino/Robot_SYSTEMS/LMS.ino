@@ -145,44 +145,138 @@ delay(500);
 
 
 
-//Returns the port value of the leg. 
-int potVale(int leg, char axis)
+// Reads and avrages the value of a pot on legs.
+int potRead(int leg, char part)
 {
+  int pot = 0;
+  int *myPointer;
+  String comName = "";
 
-int avrage[5];
-int pot;
-int *potPointer;
+  switch(leg)
+  {
+    case 1:
+    switch(part)
+    {
+      case 'A':
+      pot = L1Apot;
+      myPointer = &L_1Ap;
+      comName = "pL1A";
+      break;
+
+      case 'B':
+      pot = L1Bpot;
+      myPointer = &L_1Bp;
+      comName = "pL1B";
+      break;
+
+      case 'C':
+      pot = L1Cpot;
+      myPointer = &L_1Cp;
+      comName = "pL1C";
+      break;
+    }
+    break;
+
+    case 2:
+    switch(part)
+    {
+      case 'A':
+      pot = L2Apot;
+      myPointer = &L_2Ap;
+      comName = "pL2A";
+      break;
+
+      case 'B':
+      pot = L2Bpot;
+      myPointer = &L_2Bp;
+      comName = "pL2B";
+      break;
+
+      case 'C':
+      pot = L2Cpot;
+      myPointer = &L_2Cp;
+      comName = "pL2C";
+      break;
+    }
+    break;
+
+    case 3:
+    switch(part)
+    {
+      case 'A':
+      pot = L3Apot;
+      myPointer = &L_3Ap;
+      comName = "pL3A";
+      break;
+
+      case 'B':
+      pot = L3Bpot;
+      myPointer = &L_3Bp;
+      comName = "pL3B";
+      break;
+
+      case 'C':
+      pot = L3Cpot;
+      myPointer = &L_3Cp;
+      comName = "pL3C";
+      break;
+    }
+    break;
+
+    case 4:
+    switch(part)
+    {
+      case 'A':
+      pot = L4Apot;
+      myPointer = &L_4Ap;
+      comName = "pL4A";
+      break;
+
+      case 'B':
+      pot = L4Bpot;
+      myPointer = &L_4Bp;
+      comName = "pL4B";
+      break;
+
+      case 'C':
+      pot = L4Cpot;
+      myPointer = &L_4Cp;
+      comName = "pL4C";
+      break;
+    }
+    break;
+  }
+
+int reader = 0;
   
   for(int i = 0; i < 5; i++)
   {
-    switch(leg) 
-    {
-      case 1: 
-      switch(axis)
-      {
-        case 'A':
-        avrage[i] = analogRead(L1Apot);
-        Serial.print("currentAv: ");
-        Serial.println(avrage[i]);
-        potPointer = &L1Apot;
-
-        case 'B':
-        pot = L1Bpot;
-
-        case 'C':
-        pot = L1Cpot;
-        
-      }
-    }
+    reader = reader + analogRead(pot);
   }
 
-int fav = ((avrage[0] + avrage[1] + avrage[2] + avrage[3] + avrage[4]) / 5);
-potPointer = fav;
+reader = reader/5;
 
-Serial.print("fav: ");
-Serial.println(fav);
+  *myPointer = reader;
+   piPot(comName + ":", reader);
+  
+  return reader;
+}
 
-Serial.println("done");
- 
- return fav;
+void updateAllPots()
+{
+  potRead(1,'A');
+  potRead(1,'B');
+  potRead(1,'C');
+
+  potRead(2,'A');
+  potRead(2,'B');
+  potRead(2,'C');
+
+  potRead(3,'A');
+  potRead(3,'B');
+  potRead(3,'C');
+
+  potRead(4,'A');
+  potRead(4,'B');
+  potRead(4,'C');
 }

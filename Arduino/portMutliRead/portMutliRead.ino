@@ -4,7 +4,7 @@ int L_1Ap = 0;
 int L_1B = 0;
 int L_1C = 0;
 
-int L1Apot = A1;
+#define L1Apot A1
 #define L1Bpot A2
 #define L1Cpot A3
 
@@ -26,7 +26,7 @@ void loop() {
 
 int potRead(int leg, char part)
 {
-  int pot;
+  int pot = 0;
   int *myPointer;
 
   switch(leg)
@@ -41,16 +41,16 @@ int potRead(int leg, char part)
     }
   }
 
-int reader = analogRead(pot);
+int reader = 0;
 
-  /*
+  
   for(int i = 0; i < 5; i++)
   {
     reader = reader + analogRead(pot);
   }
 
-  reader = reader;
-  */
+reader = reader/5;
+
   *myPointer = reader;
    
 
