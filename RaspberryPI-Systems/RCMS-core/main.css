@@ -1,0 +1,25 @@
+body {
+    background-color:gray;
+     margin: 1%;
+     font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  table,th,td {
+    border: 2px solid black;
+    border-collapse: collapse;
+  }
+  
+  th,td{
+      padding: 10px;
+  }
+  
+  #headertab {
+    background-color: BLACK;
+    color: white;
+    font-weight: bold;
+  }
+  
+  #displayDef{
+    background-color: RED;
+    color: white;
+  }

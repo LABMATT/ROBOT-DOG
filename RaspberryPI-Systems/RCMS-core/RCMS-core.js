@@ -1,56 +1,88 @@
-const SerialPort = require('serialport')
-const { read } = require('fs')
-require("WebService/webpage.js");
+process.env.PWD = process.cwd()
+const SerialPort = require('/usr/local/lib/node_modules/serialport');
+const Readline = require('@serialport/parser-readline');
 
-const readline = require('readline');
+const express = require('express');
+const app = express();
+var fs = require('fs');
+var http = require("http").createServer( app );
+var io = require('socket.io')(http);
 
-var online = false;
-var end = false;
+const port = new SerialPort('/dev/ttyAMA0');
+const parser = new Readline();
+port.pipe(parser);
+//parser.on('data', console.log);
+//port.write('pi_online\n');
 
-const rl = readline.createInterface({
+parser.on('data', sendUpdate);
+
+function sendUpdateSerial(msg)
+{
+  port.write(msg + "\n");
+  console.log(msg);
+}
+
+//#### Allow console input ################################################3
+const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
-});
-
-const port = new SerialPort('COM6', {
-  baudRate: 9600
 })
 
-// Read data that is available but keep the stream in "paused mode"
-port.on('readable', function () {
-  console.log('Data:', port.read())
-})
-
-// Switches the port into "flowing mode"
-port.on('data', function (data) {
-  console.log('Data:', data)
-})
-
-port.on('open', function() {
-  console.log("Serial Port Has Connection.");
-  online = true;
-});
-
-// When a serial link is established start running the 
-read.on('true', function()
-{
-  console.log("Starting RCMS functions");
-
-  
-
-  while(end == false)
+readline.on("line", (name) => {
+  if(name == "u")
   {
-    ReadSerial();
-
+    displayRoster();
+  }
+  if(name.startsWith("avr "))
+  {
+      var msg = name.substring(4, name.length)
+      port.write();
+      console.log("msg:" + msg);
+  }
+  if(name == "s")
+  {
+    port.write('pi_offline\n');
+    process.abort()
+  }
+  if(name == "g")
+  {
+    port.write('pi_online\n');
   }
 })
 
-function ReadSerial()
-{
 
-}
 
-function LVS()
-{
+// WEBPAGE #################################################################################################
+process.env.PWD = process.cwd()
 
-}
+const PORT = 3000;
+
+app.use(express.static(process.env.PWD + '/'));
+  
+app.get( "/", function( req, res ) {
+  res.sendFile( __dirname + "/index.html" );
+  });
+
+
+// SOCKET IO ################################################################################################
+
+
+
+http.listen(PORT, function() {
+  console.log("listening on *:" + PORT );
+  });
+
+  io.on('connection', (socket) => {
+    console.log("User Connected.")
+  });
+
+  function sendUpdate(data)
+  {
+      io.sockets.emit("update", data);
+  }
+
+  io.on('connection', (socket) => {
+    socket.on('pid', sendUpdateSerial);
+  });
+
+

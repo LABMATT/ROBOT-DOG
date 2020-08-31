@@ -1,0 +1,14 @@
+{
+  "name": "rcmspkg",
+  "version": "1.0.0",
+  "description": "Main systems for running robot systems. ROBOT CONTROL MANAGMENT SYSTEM",
+  "main": "RCMS-core.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Lewington",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io-client": "file:socket.io"
+  }
+}

@@ -1,7 +1,0 @@
-const SerialPort = require('serialport')
-const Readline = require('@serialport/parser-readline')
-const port = new SerialPort('/dev/ttyACM0')
-const parser = new Readline()
-port.pipe(parser)
-parser.on('data', console.log)
-port.write('ROBOT PLEASE RESPOND\n')
