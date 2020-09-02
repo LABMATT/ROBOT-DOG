@@ -178,7 +178,7 @@ delay(500);
 
 
 
-// Reads and avrages the value of a pot on legs.
+//#### Reads and avrages the value of a pot on legs. ########################################
 int potRead(int leg, char part)
 {
   int pot = 0;
@@ -295,6 +295,14 @@ reader = reader/10;
   return reader;
 }
 
+
+//#### SET NEW POIT POINT ##########################################################################################################
+void legSetPoint(int leg, char part)
+{
+  
+}
+
+//#### Update all the pot on startup ###############################################################################################
 void updateAllPots()
 {
   potRead(1,'A');

@@ -21,13 +21,24 @@ int play = 10;
 
 boolean picomenb = true;
 
-// #### LEG 1 ##############################################
-float L_1_Lenth;
+//#### ALL LEG VALUES ######
+// Double array of all the values for each elg pid.
+//              1a 1b 2a 2b 3a 3b 4a 4b
+double kp[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+double ki[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+double kd[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+
+//#### LEG 1 ##############################################
+double aL1AKp=0.2, aL1AKi=1, aL1AKd=1;
+double L1Setpoint, L1Input, L1Output;
 
 //Le 1 A-axis Pot reading
 int L_1Ap = 0;
 int L_1Bp = 0;
 int L_1Cp = 0;
+
+
 
 #define L1enable 40
 
@@ -167,7 +178,7 @@ pinMode(L4Apot, INPUT);
 pinMode(L4Bpot, INPUT);
 pinMode(L4Cpot, INPUT);
 
-Serial.begin(9600);
+Serial.begin(115200);
 
 piWD();
 enableLegs(true);
@@ -206,8 +217,8 @@ potRead(3, 'C');
 potRead(4, 'A');
 potRead(4, 'B');
 potRead(4, 'C');
-
-//delay(6);
+piRounds();
+delay(50);
 }
 
 
@@ -238,9 +249,11 @@ delay(1500);
 
 int pot;
 
+
+
 void pop()
 {
-pot = analogRead(L1Apot);
+pot = potRead(1,'A');
 
 
 if(pot < 500 - play)

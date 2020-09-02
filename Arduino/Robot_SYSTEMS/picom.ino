@@ -65,6 +65,15 @@ void picom()
       case 102:
       emsDIG = false;
       break;
+      case 103:
+      enableLegs(false);
+      String floof = "";
+      while(floof == "")
+      {
+        floof = Serial.readString();
+      }
+      
+      break;
     }
   }
 
@@ -82,5 +91,9 @@ Serial.println(name + val);
 // pi rounds
 void piRounds()
 {
-  //Serial.println("pL1A" + );
+  //Serial.println("pL1A" + )
+
+  piupdate("aL1AKp:", aL1AKp);
+  piupdate("aL1AKi:", aL1AKi);
+  piupdate("aL1AKd:", aL1AKd);
 }
