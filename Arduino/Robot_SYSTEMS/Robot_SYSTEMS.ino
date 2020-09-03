@@ -179,6 +179,7 @@ pinMode(L4Bpot, INPUT);
 pinMode(L4Cpot, INPUT);
 
 Serial.begin(115200);
+Serial.println("avr_online");
 
 piWD();
 enableLegs(true);
@@ -218,7 +219,8 @@ potRead(4, 'A');
 potRead(4, 'B');
 potRead(4, 'C');
 piRounds();
-delay(50);
+
+delay(5);
 }
 
 

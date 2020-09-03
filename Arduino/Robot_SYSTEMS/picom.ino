@@ -66,14 +66,68 @@ void picom()
       emsDIG = false;
       break;
       case 103:
-      enableLegs(false);
-      String floof = "";
-      while(floof == "")
-      {
-        floof = Serial.readString();
-      }
       
-      break;
+      int p = 0, i = 0, d = 0, setcode = 0;
+      boolean floof = true;
+      Serial.println("_Floof time");
+      enableLegs(false);
+      
+      while(floof == true)
+      {
+         int newint = Serial.parseInt();
+         if(newint < 0)
+         {
+          Kp = newint * -1;
+          piupdate("aL1AKp:", Kp);
+          floof = false;
+         }
+         if(newint == 256)
+         {
+          Kp = 0;
+          piupdate("aL1AKp:", Kp);
+          floof = false;
+         }
+      }
+
+      floof = true;
+
+      while(floof == true)
+      {
+         int newint = Serial.parseInt();
+         if(newint < 0)
+         {
+          Ki = newint * -1;
+          piupdate("aL1AKi:", Ki);
+          floof = false;
+         }
+         if(newint == 256)
+         {
+          Ki = 0;
+          piupdate("aL1AKi:", Ki);
+          floof = false;
+         }
+      }
+
+      floof = true;
+
+      while(floof == true)
+      {
+         int newint = Serial.parseInt();
+         if(newint < 0)
+         {
+          Kd = newint * -1;
+          piupdate("aL1AKd:", Kd);
+          floof = false;
+         }
+         if(newint == 256)
+         {
+          Kd = 0;
+          piupdate("aL1AKd:", Kd);
+          floof = false;
+         }
+      }
+     enableLegs(true);
+     Serial.println("_PID configured.");
     }
   }
 
@@ -93,7 +147,7 @@ void piRounds()
 {
   //Serial.println("pL1A" + )
 
-  piupdate("aL1AKp:", aL1AKp);
-  piupdate("aL1AKi:", aL1AKi);
-  piupdate("aL1AKd:", aL1AKd);
+ // piupdate("aL1AKp:", aL1AKp);
+ // piupdate("aL1AKi:", aL1AKi);
+ // piupdate("aL1AKd:", aL1AKd);
 }
