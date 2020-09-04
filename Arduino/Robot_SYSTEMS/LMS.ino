@@ -62,6 +62,9 @@ piupdate("eL3C:", false);
 piupdate("eL4A:", false);
 piupdate("eL4B:", false);
 piupdate("eL4C:", false);
+
+
+
 }
 }
 
@@ -320,4 +323,13 @@ void updateAllPots()
   potRead(4,'A');
   potRead(4,'B');
   potRead(4,'C');
+
+  piupdate("mL1A:", Input);
+}
+
+
+// #### Retruns the value for that pointer for part sefied. This canthen be used in programs (Leg, part, Motor or pot) #########################################
+void legLegPointer()
+{
+  
 }

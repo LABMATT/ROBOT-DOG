@@ -66,68 +66,17 @@ void picom()
       emsDIG = false;
       break;
       case 103:
-      
-      int p = 0, i = 0, d = 0, setcode = 0;
-      boolean floof = true;
-      Serial.println("_Floof time");
-      enableLegs(false);
-      
-      while(floof == true)
-      {
-         int newint = Serial.parseInt();
-         if(newint < 0)
-         {
-          Kp = newint * -1;
-          piupdate("aL1AKp:", Kp);
-          floof = false;
-         }
-         if(newint == 256)
-         {
-          Kp = 0;
-          piupdate("aL1AKp:", Kp);
-          floof = false;
-         }
-      }
-
-      floof = true;
-
-      while(floof == true)
-      {
-         int newint = Serial.parseInt();
-         if(newint < 0)
-         {
-          Ki = newint * -1;
-          piupdate("aL1AKi:", Ki);
-          floof = false;
-         }
-         if(newint == 256)
-         {
-          Ki = 0;
-          piupdate("aL1AKi:", Ki);
-          floof = false;
-         }
-      }
-
-      floof = true;
-
-      while(floof == true)
-      {
-         int newint = Serial.parseInt();
-         if(newint < 0)
-         {
-          Kd = newint * -1;
-          piupdate("aL1AKd:", Kd);
-          floof = false;
-         }
-         if(newint == 256)
-         {
-          Kd = 0;
-          piupdate("aL1AKd:", Kd);
-          floof = false;
-         }
-      }
-     enableLegs(true);
-     Serial.println("_PID configured.");
+      pidUpdate(103);
+      break;
+      case 104:
+      pidUpdate(104);
+      break;
+      case 105:
+      pidUpdate(105);
+      break;
+      case 106:
+      pidUpdate(106);
+      break;
     }
   }
 
@@ -137,7 +86,7 @@ void picom()
 
 
 // Send the values of the pots
-void piupdate(String name, int val)
+void piupdate(String name, double val)
 {
 Serial.println(name + val);  
 }
@@ -150,4 +99,97 @@ void piRounds()
  // piupdate("aL1AKp:", aL1AKp);
  // piupdate("aL1AKi:", aL1AKi);
  // piupdate("aL1AKd:", aL1AKd);
+}
+
+void pidUpdate(int lcode)
+{
+        double p = 0, i = 0, d = 0, setcode = 0;
+      boolean floof = true;
+      Serial.println("_Floof time");
+      enableLegs(false);
+
+      switch(lcode)
+      {
+      case 103:
+      while(floof == true)
+      {
+         double newint = Serial.parseFloat();
+         if(newint < 0)
+         {
+          Kp = newint * -1;
+          piupdate("aL1AKp:", Kp);
+          floof = false;
+         }
+         if(newint == -2000)
+         {
+          Kp = 0;
+          piupdate("aL1AKp:", Kp);
+          floof = false;
+         }
+      }
+      break;
+
+      case 104:
+      while(floof == true)
+      {
+         double newint = Serial.parseFloat();
+         if(newint < 0)
+         {
+          Ki = newint * -1;
+          piupdate("aL1AKi:", Ki);
+          floof = false;
+         }
+         if(newint == -2000)
+         {
+          Ki = 0;
+          piupdate("aL1AKi:", Ki);
+          floof = false;
+         }
+      }
+      break;
+
+      case 105:
+      while(floof == true)
+      {
+         double newint = Serial.parseFloat();
+         if(newint < 0)
+         {
+          Kd = newint * -1;
+          piupdate("aL1AKd:", Kd);
+          floof = false;
+         }
+         if(newint == -2000)
+         {
+          Kd = 0;
+          piupdate("aL1AKd:", Kd);
+          floof = false;
+         }
+      }
+     break;
+
+      case 106:
+      while(floof == true)
+      {
+         int newint = Serial.parseInt();
+         if(newint < 0)
+         {
+          Setpoint = newint * -1;
+          piupdate("sL1A:", Setpoint);
+          floof = false;
+         }
+         if(newint == -2000)
+         {
+          Setpoint = 0;
+          piupdate("sL1A:", Setpoint);
+          floof = false;
+         }
+      }
+     break;
+      }
+     myPID.SetTunings(Kp, Ki, Kd);
+     enableLegs(true);
+     Serial.println("_PID configured.");
+
+       analogWrite(L1Apwm, 0);
+  digitalWrite(L1An, LOW); 
 }

@@ -24,14 +24,14 @@ boolean picomenb = true;
 //#### ALL LEG VALUES ######
 // Double array of all the values for each elg pid.
 //              1a 1b 2a 2b 3a 3b 4a 4b
-double kp[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-double ki[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-double kd[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+//double kp[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+//double ki[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+//double kd[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 
 //#### LEG 1 ##############################################
-double aL1AKp=0.2, aL1AKi=1, aL1AKd=1;
-double L1Setpoint, L1Input, L1Output;
+//double aL1AKp=0.2, aL1AKi=1, aL1AKd=1;
+//double L1Setpoint, L1Input, L1Output;
 
 //Le 1 A-axis Pot reading
 int L_1Ap = 0;
@@ -62,7 +62,7 @@ double Setpoint, Input, Output;
 // Kp = 1
 // Ki = 0.1
 // Kd = 0.25
-double Kp=0.2, Ki=1, Kd=1;
+double Kp=0.1, Ki=0, Kd=0;
 PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
 
 // #### LEG 2 ##############################################
@@ -179,48 +179,32 @@ pinMode(L4Bpot, INPUT);
 pinMode(L4Cpot, INPUT);
 
 Serial.begin(115200);
-Serial.println("avr_online");
+Serial.println("_avr_online");
 
 piWD();
 enableLegs(true);
 
 updateAllPots();
 
- Setpoint = 500;
- 
+  Setpoint = 800;
+  Input =  potRead(1,'A');
  //turn the PID on
  myPID.SetMode(AUTOMATIC);
+ myPID.SetOutputLimits(-255, 255);
+
 }
 
 
 void loop() {
  emgSTOP();
- //Serial.println("mainlop");
 
 picom();
 //cal();
 
-//pop();
+pop();
 //delay(100);
 
-potRead(1, 'A');
-potRead(1, 'B');
-potRead(1, 'C');
-
-potRead(2, 'A');
-potRead(2, 'B');
-potRead(2, 'C');
-
-potRead(3, 'A');
-potRead(3, 'B');
-potRead(3, 'C');
-
-potRead(4, 'A');
-potRead(4, 'B');
-potRead(4, 'C');
-piRounds();
-
-delay(5);
+delay(100);
 }
 
 
@@ -249,40 +233,43 @@ lcservos(2, 90);
 delay(1500);
 }
 
-int pot;
-
-
 
 void pop()
 {
-pot = potRead(1,'A');
 
+  Input = potRead(1,'A');
+  myPID.Compute();
 
-if(pot < 500 - play)
+if(Input > Setpoint + play || Input < Setpoint - play)
 {
- Input = pot;
- if(myPID.Compute() == true)
- {
- Serial.println("1");
- Serial.println(pot);
- Serial.println(Output);
- analogWrite(L1Apwm, Output);
- digitalWrite(L1An, LOW);
- }
-} else if(pot > 500 + play)
-{
- Input = 1023 - pot;
- if(myPID.Compute() == true)
- {
- Serial.println("2");
- Serial.println(pot);
- Serial.println(Output);
- analogWrite(L1Apwm, 255 - Output);
- digitalWrite(L1An, HIGH);
- }
-} else
-{
- analogWrite(L1Apwm, 0);
- digitalWrite(L1An, LOW);
-}
+  if(Input > 0 && Input < 1023) {
+  if(Output < 0)
+  {
+    
+  analogWrite(L1Apwm, (255 - (Output * -1)));
+  digitalWrite(L1An, HIGH);
+  } else if(Output > 0)
+  {
+
+  analogWrite(L1Apwm, Output);
+  digitalWrite(L1An, LOW); 
+  }else
+  {
+  analogWrite(L1Apwm, 0);
+  digitalWrite(L1An, LOW); 
+  }
+  }else
+  {
+  Output = 0;
+  analogWrite(L1Apwm, 0);
+  digitalWrite(L1An, LOW); 
+  }
+}else
+  {
+  analogWrite(L1Apwm, 0);
+  digitalWrite(L1An, LOW); 
+  }
+
+piupdate("sL1A:", Setpoint);
+piupdate("mL1A:", Output);
 }
