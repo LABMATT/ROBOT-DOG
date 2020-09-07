@@ -1,4 +1,9 @@
-float pot_buffer[100];
+// POTS 1-100 
+int c_buffer[100] = {};
+int p_buffer[100] = {};
+
+ long previousMillis = 0;
+ long interval = 1000;
 
 
 //Pi watch dog. Wait for com.
@@ -194,4 +199,45 @@ void pidUpdate(int lcode)
 
        analogWrite(L1Apwm, 0);
   digitalWrite(L1An, LOW); 
+}
+
+// Sets the buffer all to 0.
+void initBuffer()
+{
+
+int asize = (sizeof(c_buffer) / sizeof(c_buffer[0]));
+  
+  for(int i = 0; i < asize; i++)
+  {
+    c_buffer[i] = 0;
+    p_buffer[i] = 0;
+  }
+}
+
+// Checks if the buffer has changed. If so send it over serial
+void updateBuffer()
+{
+  unsigned long currentMillis = millis();
+ 
+  if(currentMillis - previousMillis > interval) {
+    
+    previousMillis = currentMillis;
+    int asize = (sizeof(c_buffer) / sizeof(c_buffer[0]));
+    
+  for(int i = 0; i < 10;i++)
+  {
+    int currentBuffer = c_buffer[i];
+    int lastBuffer = p_buffer[i];
+    
+    if(currentBuffer != lastBuffer)
+    {
+      Serial.print(i);
+      Serial.print(":");
+      Serial.print(currentBuffer);
+      Serial.print("\n");
+      
+      p_buffer[i] = c_buffer[i];
+    }
+  }
+  }
 }

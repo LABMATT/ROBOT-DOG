@@ -4,7 +4,7 @@
 
 void ini()
 {
-  pinMode(powLED, OUTPUT);
+pinMode(powLED, OUTPUT);
 pinMode(emgLED, OUTPUT);
 pinMode(emgBut, INPUT_PULLUP);
 
@@ -50,6 +50,8 @@ pinMode(L4Bn, OUTPUT);
 pinMode(L4Apot, INPUT);
 pinMode(L4Bpot, INPUT);
 pinMode(L4Cpot, INPUT);
+
+initBuffer();
 
 Serial.begin(115200);
 
