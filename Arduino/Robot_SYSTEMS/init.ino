@@ -53,7 +53,8 @@ pinMode(L4Cpot, INPUT);
 
 initBuffer();
 
-Serial.begin(115200);
+Serial.begin(2000000);
+//Serial.setTimeout(50);
 
 Serial.println("_avr_online");
 }

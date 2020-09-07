@@ -17,9 +17,13 @@
 
 boolean enleg = false;
 boolean emsDIG = false;
-int play = 10;
+int play = 15;
 
 boolean picomenb = true;
+
+// POTS 1-100 
+int c_buffer[100] = {};
+int p_buffer[100] = {};
 
 //#### ALL LEG VALUES ######
 // Double array of all the values for each elg pid.
@@ -32,13 +36,6 @@ boolean picomenb = true;
 //#### LEG 1 ##############################################
 //double aL1AKp=0.2, aL1AKi=1, aL1AKd=1;
 //double L1Setpoint, L1Input, L1Output;
-
-//Le 1 A-axis Pot reading
-int L_1Ap = 0;
-int L_1Bp = 0;
-int L_1Cp = 0;
-
-
 
 #define L1enable 40
 
@@ -140,21 +137,21 @@ updateAllPots();
 
   Setpoint = 550;
   Input =  potRead(1,'A');
- //turn the PID on
- myPID.SetMode(AUTOMATIC);
- myPID.SetOutputLimits(-255, 255);
-
+  //turn the PID on
+  myPID.SetMode(AUTOMATIC);
+  myPID.SetOutputLimits(-255, 255);
+  myPID.SetSampleTime(50);
 }
 
 
 void loop() {
- emgSTOP();
+emgSTOP();
 
+updateBuffer();
 picom();
 //cal();
 
 pop();
-//delay(100);
 
 delay(100);
 }
@@ -192,9 +189,9 @@ void pop()
   Input = potRead(1,'A');
   myPID.Compute();
 
-if(Input > Setpoint + play || Input < Setpoint - play)
+if(Input > Setpoint + play || Input < Setpoint - play )
 {
-  if(Input > 0 && Input < 1023) {
+  Serial.println(Output);
   if(Output < 0)
   {
     
@@ -210,18 +207,11 @@ if(Input > Setpoint + play || Input < Setpoint - play)
   analogWrite(L1Apwm, 0);
   digitalWrite(L1An, LOW); 
   }
-  }else
-  {
-  Output = 0;
-  analogWrite(L1Apwm, 0);
-  digitalWrite(L1An, LOW); 
-  }
 }else
   {
   analogWrite(L1Apwm, 0);
   digitalWrite(L1An, LOW); 
   }
 
-piupdate("sL1A:", Setpoint);
 piupdate("mL1A:", Output);
 }

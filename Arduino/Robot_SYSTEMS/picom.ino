@@ -1,9 +1,7 @@
-// POTS 1-100 
-int c_buffer[100] = {};
-int p_buffer[100] = {};
+
 
  long previousMillis = 0;
- long interval = 1000;
+ long interval = 200;
 
 
 //Pi watch dog. Wait for com.
@@ -13,8 +11,8 @@ void piWD()
   Serial.println("piwd");
 
 boolean readystate = false;
-unsigned long previousMillis = 0;        // will store last time LED was updated
-const long interval = 1000;           // interval at which to blink (milliseconds)
+unsigned long ledpreviousMillis = 0;        // will store last time LED was updated
+const long ledinterval = 1000;           // interval at which to blink (milliseconds)
 int ledState = LOW; 
   
   while(Serial.available() || readystate == false)
@@ -22,7 +20,7 @@ int ledState = LOW;
     
  unsigned long currentMillis = millis();
  
-  if (currentMillis - previousMillis >= interval) {
+  if (currentMillis - ledpreviousMillis >= ledinterval) {
     // save the last time you blinked the LED
     previousMillis = currentMillis;
 
@@ -57,7 +55,7 @@ a.trim();
 // Wait for commands from pi
 void picom() 
 {
-
+  updateBuffer();
   int code = 0;
   if(Serial.available() > 0)
   {
@@ -86,9 +84,6 @@ void picom()
       break;
     }
   }
-
-  //Serial.print("code: ");
-  //Serial.println(code);
 }
 
 
@@ -181,13 +176,13 @@ void pidUpdate(int lcode)
          if(newint < 0)
          {
           Setpoint = newint * -1;
-          piupdate("sL1A:", Setpoint);
+          c_buffer[66];
           floof = false;
          }
          if(newint == -2000)
          {
           Setpoint = 0;
-          piupdate("sL1A:", Setpoint);
+          c_buffer[66];
           floof = false;
          }
       }
@@ -224,7 +219,7 @@ void updateBuffer()
     previousMillis = currentMillis;
     int asize = (sizeof(c_buffer) / sizeof(c_buffer[0]));
     
-  for(int i = 0; i < 10;i++)
+  for(int i = 0; i < asize;i++)
   {
     int currentBuffer = c_buffer[i];
     int lastBuffer = p_buffer[i];

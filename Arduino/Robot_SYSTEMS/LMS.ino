@@ -2,70 +2,91 @@
 // Enableds legs for movment. 2 motors and servos. Updates gloable variable if changed.
 void enableLegs(boolean en)
 {
-
-enleg = (en != enleg) ? en : enleg;
   
-  if(enleg == true)
+enleg = (en != enleg) ? en : enleg;
+
+legEnable(1, enleg);
+legEnable(2, enleg);
+legEnable(3, enleg);
+legEnable(4, enleg);
+}
+
+// Set a leg to true or false
+void legEnable(int leg, boolean state)
+{
+  if(state == true)
   {
-    Serial.println("_Legs Enabled");
+  switch(leg)
+  {
+    case 1:
+    servo_Leg_1.attach(36);
+    digitalWrite(L1enable, HIGH);
+    c_buffer[42] = 1;
+    c_buffer[43] = 1;
+    c_buffer[44] = 1;
+    break;
     
-servo_Leg_1.attach(36);
-servo_Leg_2.attach(37);
-servo_Leg_3.attach(38);
-servo_Leg_4.attach(39);
-digitalWrite(L1enable, HIGH);
-digitalWrite(L2enable, HIGH);
-digitalWrite(L3enable, HIGH);
-digitalWrite(L4enable, HIGH);
-piupdate("eL1A:", true);
-piupdate("eL1B:", true);
-piupdate("eL1C:", true);
+    case 2:
+    servo_Leg_2.attach(37);
+    digitalWrite(L2enable, HIGH);
+    c_buffer[45] = 1;
+    c_buffer[46] = 1;
+    c_buffer[47] = 1;
+    break;
 
-piupdate("eL2A:", true);
-piupdate("eL2B:", true);
-piupdate("eL2C:", true);
+    case 3:
+    servo_Leg_3.attach(38);
+    digitalWrite(L3enable, HIGH);
+    c_buffer[48] = 1;
+    c_buffer[49] = 1;
+    c_buffer[50] = 1;
+    break;
 
-piupdate("eL3A:", true);
-piupdate("eL3B:", true);
-piupdate("eL3C:", true);
-
-piupdate("eL4A:", true);
-piupdate("eL4B:", true);
-piupdate("eL4C:", true);
-
+    case 4:
+    servo_Leg_4.attach(39);
+    digitalWrite(L4enable, HIGH);
+    c_buffer[51] = 1;
+    c_buffer[52] = 1;
+    c_buffer[53] = 1;
+    break;
+  }
   } else
   {
+  switch(leg)
+  {
+    case 1:
+    servo_Leg_1.detach();
+    digitalWrite(L1enable, LOW);
+    c_buffer[42] = 0;
+    c_buffer[43] = 0;
+    c_buffer[44] = 0;
+    break;
     
-        Serial.println("_Legs Disabled");
-servo_Leg_1.detach();
-servo_Leg_2.detach();
-servo_Leg_3.detach();
-servo_Leg_4.detach();
-digitalWrite(L1enable, LOW);
-digitalWrite(L2enable, LOW);
-digitalWrite(L3enable, LOW);
-digitalWrite(L4enable, LOW);
+    case 2:
+    servo_Leg_2.detach();
+    digitalWrite(L2enable, LOW);
+    c_buffer[45] = 0;
+    c_buffer[46] = 0;
+    c_buffer[47] = 0;
+    break;
 
+    case 3:
+    servo_Leg_3.detach();
+    digitalWrite(L3enable, LOW);
+    c_buffer[48] = 0;
+    c_buffer[49] = 0;
+    c_buffer[50] = 0;
+    break;
 
-piupdate("eL1A:", false);
-piupdate("eL1B:", false);
-piupdate("eL1C:", false);
-
-piupdate("eL2A:", false);
-piupdate("eL2B:", false);
-piupdate("eL2C:", false);
-
-piupdate("eL3A:", false);
-piupdate("eL3B:", false);
-piupdate("eL3C:", false);
-
-piupdate("eL4A:", false);
-piupdate("eL4B:", false);
-piupdate("eL4C:", false);
-
-
-
-}
+    case 4:
+    servo_Leg_4.detach();
+    digitalWrite(L4enable, LOW);
+    c_buffer[51] = 0;
+    c_buffer[52] = 0;
+    c_buffer[53] = 0;
+    break;
+  }
+  }
 }
 
 
@@ -94,6 +115,7 @@ while(digitalRead(emgBut) == LOW || emsDIG == true)
   digitalWrite(emgLED, HIGH);
   delay(100);
   picom();
+  updateAllPots();
 
 }
 enableLegs(true);
@@ -195,19 +217,19 @@ int potRead(int leg, char part)
     {
       case 'A':
       pot = L1Apot;
-      myPointer = &L_1Ap;
+      myPointer = &c_buffer[54]; //&L_1Ap;
       comName = "pL1A";
       break;
 
       case 'B':
       pot = L1Bpot;
-      myPointer = &L_1Bp;
+      myPointer = &c_buffer[55]; //&L_1Bp;
       comName = "pL1B";
       break;
 
       case 'C':
       pot = L1Cpot;
-      myPointer = &L_1Cp;
+      myPointer = &c_buffer[56]; //&L_1Cp;
       comName = "pL1C";
       break;
     }
@@ -218,19 +240,19 @@ int potRead(int leg, char part)
     {
       case 'A':
       pot = L2Apot;
-      myPointer = &L_2Ap;
+      myPointer = &c_buffer[57]; //&L_2Ap;
       comName = "pL2A";
       break;
 
       case 'B':
       pot = L2Bpot;
-      myPointer = &L_2Bp;
+      myPointer = &c_buffer[58]; //&L_2Bp;
       comName = "pL2B";
       break;
 
       case 'C':
       pot = L2Cpot;
-      myPointer = &L_2Cp;
+      myPointer = &c_buffer[59]; //&L_2Cp;
       comName = "pL2C";
       break;
     }
@@ -241,19 +263,19 @@ int potRead(int leg, char part)
     {
       case 'A':
       pot = L3Apot;
-      myPointer = &L_3Ap;
+      myPointer = &c_buffer[60]; //&L_3Ap;
       comName = "pL3A";
       break;
 
       case 'B':
       pot = L3Bpot;
-      myPointer = &L_3Bp;
+      myPointer = &c_buffer[61]; //&L_3Bp;
       comName = "pL3B";
       break;
 
       case 'C':
       pot = L3Cpot;
-      myPointer = &L_3Cp;
+      myPointer = &c_buffer[62]; //&L_3Cp;
       comName = "pL3C";
       break;
     }
@@ -264,19 +286,19 @@ int potRead(int leg, char part)
     {
       case 'A':
       pot = L4Apot;
-      myPointer = &L_4Ap;
+      myPointer = &c_buffer[63]; //&L_4Ap;
       comName = "pL4A";
       break;
 
       case 'B':
       pot = L4Bpot;
-      myPointer = &L_4Bp;
+      myPointer = &c_buffer[64]; //&L_4Bp;
       comName = "pL4B";
       break;
 
       case 'C':
       pot = L4Cpot;
-      myPointer = &L_4Cp;
+      myPointer = &c_buffer[65]; //&L_4Cp;
       comName = "pL4C";
       break;
     }
@@ -293,7 +315,7 @@ int reader = 0;
 reader = reader/10;
 
   *myPointer = reader;
-   piupdate(comName + ":", reader);
+   //piupdate(comName + ":", reader);
   
   return reader;
 }

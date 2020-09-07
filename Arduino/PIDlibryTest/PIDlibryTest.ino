@@ -32,11 +32,20 @@ void setup()
   digitalWrite(neg, LOW);
   digitalWrite(40, HIGH);
 
-  Serial.begin(9600);
+  Serial.begin(2000000);
 }
 
 void loop()
 {
+
+  if(Serial.available() > 0)
+  {
+    int sr = Serial.parseInt();
+    if(sr != 0)
+    {
+      Setpoint = sr;
+    }
+  }
 
   Input = analogRead(PIN_INPUT);
   myPID.Compute();
