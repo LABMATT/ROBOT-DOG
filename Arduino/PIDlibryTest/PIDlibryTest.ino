@@ -65,27 +65,3 @@ if(Input > Setpoint + play || Input < Setpoint - play )
   digitalWrite(neg, LOW); 
   }
 }
-
-/*
-   int pot = analogRead(PIN_INPUT);
-
-  if(pot < 500 - play)
-{
-  
- Input = pot;
- myPID.Compute();
- analogWrite(PIN_OUTPUT, Output);
- digitalWrite(neg, LOW);
-} else if(pot > 500 + play)
-{
-  
- Input = 1023 - pot;
- myPID.Compute();
- analogWrite(PIN_OUTPUT, 255 - Output);
- digitalWrite(neg, HIGH);
-} else
-{
- analogWrite(PIN_OUTPUT, 0);
- digitalWrite(neg, LOW);
-}
- */

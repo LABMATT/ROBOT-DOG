@@ -1,3 +1,5 @@
+float pot_buffer[100];
+
 
 //Pi watch dog. Wait for com.
 void piWD()
