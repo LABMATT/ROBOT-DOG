@@ -25,13 +25,6 @@ boolean picomenb = true;
 int c_buffer[100] = {};
 int p_buffer[100] = {};
 
-//#### ALL LEG VALUES ######
-// Double array of all the values for each elg pid.
-//              1a 1b 2a 2b 3a 3b 4a 4b
-//double kp[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-//double ki[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-//double kd[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-
 
 //#### LEG 1 ##############################################
 //double aL1AKp=0.2, aL1AKi=1, aL1AKd=1;
@@ -51,16 +44,15 @@ int p_buffer[100] = {};
 
 Servo servo_Leg_1;
 
-//Define Variables we'll be connecting to
-double Setpoint, Input, Output;
+
  
 //Specify the links and initial tuning parameters
 //p first, how far from thing
 // Kp = 1
 // Ki = 0.1
 // Kd = 0.25
-double Kp=0.1, Ki=0, Kd=0;
-PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
+//double Kp=0.1, Ki=0, Kd=0;
+
 
 // #### LEG 2 ##############################################
 int L_2Ap = 0;
@@ -124,6 +116,41 @@ int L_4Cp = 500;
 float L_4_Lenth = 3;
 Servo servo_Leg_4;
 
+
+//#### ALL LEG VALUES ######
+// Double array of all the values for each elg pid.
+//              1a 1b 2a 2b 3a 3b 4a 4b
+double kp[8] = {0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55};
+double ki[8] = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+double kd[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+int legnum[8] = {1, 1, 2, 2, 3, 3, 4, 4};
+char legchar[8] = {'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'};
+int legPWMArray[8] = {L1Apwm, L1Bpwm, L2Apwm, L2Bpwm, L3Apwm, L3Bpwm, L4Apwm, L4Bpwm};
+int legNegArray[8] = {L1An, L1Bn, L2An, L2Bn, L3An, L3Bn, L4An, L4Bn};  
+
+//Define Variables we'll be connecting to
+double Setpoint, Input, Output;
+
+
+PID myPID(&Input, &Output, &Setpoint, 0, 0, 0, DIRECT);
+
+double L1Asetpoint = 600, L1AInput, L1AOutput, L1Bsetpoint = 600, L1BInput, L1BOutput;
+PID L1A(&L1AInput, &L1AOutput, &L1Asetpoint, 0, 0, 0, DIRECT);
+PID L1B(&L1BInput, &L1BOutput, &L1Bsetpoint, 0, 0, 0, DIRECT);
+
+double L2Asetpoint = 600, L2AInput, L2AOutput, L2Bsetpoint = 600, L2BInput, L2BOutput;
+PID L2A(&L2AInput, &L2AOutput, &L2Asetpoint, 0, 0, 0, DIRECT);
+PID L2B(&L2BInput, &L2BOutput, &L2Bsetpoint, 0, 0, 0, DIRECT);
+
+double L3Asetpoint = 600, L3AInput, L3AOutput, L3Bsetpoint = 600, L3BInput, L3BOutput;
+PID L3A(&L3AInput, &L3AOutput, &L3Asetpoint, 0, 0, 0, DIRECT);
+PID L3B(&L3BInput, &L3BOutput, &L3Bsetpoint, 0, 0, 0, DIRECT);
+
+double L4Asetpoint = 600, L4AInput, L4AOutput, L4Bsetpoint = 600, L4BInput, L4BOutput;
+PID L4A(&L4AInput, &L4AOutput, &L4Asetpoint, 0, 0, 0, DIRECT);
+PID L4B(&L4BInput, &L4BOutput, &L4Bsetpoint, 0, 0, 0, DIRECT);
+
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 5;    // how many points to fade the LED by
 
@@ -135,7 +162,7 @@ enableLegs(true);
 
 updateAllPots();
 
-  Setpoint = 550;
+  Setpoint = 600;
   Input =  potRead(1,'A');
   //turn the PID on
   myPID.SetMode(AUTOMATIC);
@@ -151,7 +178,8 @@ emgSTOP();
 picom();
 //cal();
 
-pop();
+updateLEGS();
+//pop();
 
 delay(100);
 }
@@ -183,6 +211,7 @@ delay(1500);
 }
 
 
+/*
 void pop()
 {
   Input = potRead(1,'A');
@@ -217,3 +246,4 @@ if(Input > Setpoint + play || Input < Setpoint - play )
 piupdate("mL1A:", Output);
 Serial.println("_OUTPOP");
 }
+*/

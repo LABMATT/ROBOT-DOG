@@ -355,3 +355,55 @@ void legLegPointer()
 {
   
 }
+
+
+//#### Loops thought all legs and updates there pid values.
+void updateLEGS()
+{
+  for(int ppid = 0; ppid < 8; ppid++)
+  {
+      Input = potRead(legnum[ppid], legchar[ppid]);
+
+      int pwm = legPWMArray[ppid];  
+      int neg = legNegArray[ppid];
+
+      Setpoint = c_buffer[65 + ppid];
+
+      myPID.SetTunings(kp[ppid], ki[ppid], kd[ppid]);
+
+      switch(ppid)
+      {
+        case 1:
+        L1A.Compute();
+      }
+  
+
+if(Input > Setpoint + play || Input < Setpoint - play )
+{
+  myPID.Compute();
+  
+  Serial.println(Output);
+  if(Output < 0)
+  {
+    
+  analogWrite(pwm, (255 - (Output * -1)));
+  digitalWrite(neg, HIGH);
+  } else if(Output > 0)
+  {
+
+  analogWrite(pwm, Output);
+  digitalWrite(neg, LOW); 
+  }else
+  {
+  analogWrite(pwm, 0);
+  digitalWrite(neg, LOW); 
+  }
+}else
+  {
+  analogWrite(pwm, 0);
+  digitalWrite(neg, LOW); 
+  }
+
+c_buffer[77 + ppid] = Output;
+  }
+}

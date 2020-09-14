@@ -4,6 +4,9 @@
 
 void ini()
 {
+Serial.begin(2000000);
+Serial.println("_avr_booting");
+  
 pinMode(powLED, OUTPUT);
 pinMode(emgLED, OUTPUT);
 pinMode(emgBut, INPUT_PULLUP);
@@ -52,6 +55,13 @@ pinMode(L4Bpot, INPUT);
 pinMode(L4Cpot, INPUT);
 
 initBuffer();
+
+for(int i = 66; i < 78;i++)
+{
+  c_buffer[i] = 600;
+  Serial.println("In loop");
+  Serial.println(i);
+}
 
 Serial.begin(2000000);
 //Serial.setTimeout(50);

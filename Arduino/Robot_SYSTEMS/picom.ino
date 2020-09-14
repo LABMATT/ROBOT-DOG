@@ -109,6 +109,7 @@ void pidUpdate(int lcode)
       boolean floof = true;
       Serial.println("_Floof time");
       enableLegs(false);
+      double Kp=0.1, Ki=0, Kd=0;
 
       switch(lcode)
       {
@@ -188,7 +189,7 @@ void pidUpdate(int lcode)
       }
      break;
       }
-     myPID.SetTunings(Kp, Ki, Kd);
+     //myPID.SetTunings(Kp, Ki, Kd);
      enableLegs(true);
      Serial.println("_PID configured.");
 
@@ -208,6 +209,10 @@ int asize = (sizeof(c_buffer) / sizeof(c_buffer[0]));
     p_buffer[i] = 0;
   }
 }
+
+
+
+
 
 // Checks if the buffer has changed. If so send it over serial
 void updateBuffer()
