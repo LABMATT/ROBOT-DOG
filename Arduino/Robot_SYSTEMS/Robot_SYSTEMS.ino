@@ -17,7 +17,7 @@
 
 boolean enleg = false;
 boolean emsDIG = false;
-int play = 15;
+int play = 25;
 
 boolean picomenb = true;
 
@@ -147,7 +147,7 @@ updateAllPots();
 void loop() {
 emgSTOP();
 
-updateBuffer();
+//updateAllPots();
 picom();
 //cal();
 
@@ -185,12 +185,13 @@ delay(1500);
 
 void pop()
 {
-
   Input = potRead(1,'A');
-  myPID.Compute();
+  
 
 if(Input > Setpoint + play || Input < Setpoint - play )
 {
+  myPID.Compute();
+  
   Serial.println(Output);
   if(Output < 0)
   {
@@ -214,4 +215,5 @@ if(Input > Setpoint + play || Input < Setpoint - play )
   }
 
 piupdate("mL1A:", Output);
+Serial.println("_OUTPOP");
 }

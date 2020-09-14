@@ -57,7 +57,7 @@ void picom()
 {
   updateBuffer();
   int code = 0;
-  if(Serial.available() > 0)
+  if(Serial.available() > 8)
   {
     code = Serial.parseInt();
 
