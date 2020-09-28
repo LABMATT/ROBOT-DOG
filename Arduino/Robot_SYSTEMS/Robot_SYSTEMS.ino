@@ -17,7 +17,7 @@
 
 boolean enleg = false;
 boolean emsDIG = false;
-int play = 25;
+int play = 15;
 
 boolean picomenb = true;
 
@@ -122,18 +122,8 @@ Servo servo_Leg_4;
 //              1a 1b 2a 2b 3a 3b 4a 4b
 double kp[8] = {0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55};
 double ki[8] = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
+//double ki[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 double kd[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-
-int legnum[8] = {1, 1, 2, 2, 3, 3, 4, 4};
-char legchar[8] = {'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B'};
-int legPWMArray[8] = {L1Apwm, L1Bpwm, L2Apwm, L2Bpwm, L3Apwm, L3Bpwm, L4Apwm, L4Bpwm};
-int legNegArray[8] = {L1An, L1Bn, L2An, L2Bn, L3An, L3Bn, L4An, L4Bn};  
-
-//Define Variables we'll be connecting to
-double Setpoint, Input, Output;
-
-
-PID myPID(&Input, &Output, &Setpoint, 0, 0, 0, DIRECT);
 
 double L1Asetpoint = 600, L1AInput, L1AOutput, L1Bsetpoint = 600, L1BInput, L1BOutput;
 PID L1A(&L1AInput, &L1AOutput, &L1Asetpoint, 0, 0, 0, DIRECT);
@@ -151,23 +141,19 @@ double L4Asetpoint = 600, L4AInput, L4AOutput, L4Bsetpoint = 600, L4BInput, L4BO
 PID L4A(&L4AInput, &L4AOutput, &L4Asetpoint, 0, 0, 0, DIRECT);
 PID L4B(&L4BInput, &L4BOutput, &L4Bsetpoint, 0, 0, 0, DIRECT);
 
+
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 5;    // how many points to fade the LED by
 
 void setup() {
+  
 ini();
 
 piWD();
+
+setupPID();
+
 enableLegs(true);
-
-updateAllPots();
-
-  Setpoint = 600;
-  Input =  potRead(1,'A');
-  //turn the PID on
-  myPID.SetMode(AUTOMATIC);
-  myPID.SetOutputLimits(-255, 255);
-  myPID.SetSampleTime(50);
 }
 
 
@@ -181,7 +167,7 @@ picom();
 updateLEGS();
 //pop();
 
-delay(100);
+delay(50);
 }
 
 

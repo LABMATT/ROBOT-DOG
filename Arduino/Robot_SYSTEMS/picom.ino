@@ -105,6 +105,7 @@ void piRounds()
 
 void pidUpdate(int lcode)
 {
+  /*
         double p = 0, i = 0, d = 0, setcode = 0;
       boolean floof = true;
       Serial.println("_Floof time");
@@ -195,6 +196,7 @@ void pidUpdate(int lcode)
 
        analogWrite(L1Apwm, 0);
   digitalWrite(L1An, LOW); 
+  */
 }
 
 // Sets the buffer all to 0.
