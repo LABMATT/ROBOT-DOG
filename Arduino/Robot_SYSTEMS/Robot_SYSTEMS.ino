@@ -17,7 +17,7 @@
 
 boolean enleg = false;
 boolean emsDIG = false;
-int play = 15;
+int play = 0;
 
 boolean picomenb = true;
 
@@ -120,7 +120,7 @@ Servo servo_Leg_4;
 //#### ALL LEG VALUES ######
 // Double array of all the values for each elg pid.
 //              1a 1b 2a 2b 3a 3b 4a 4b
-double kp[8] = {0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55};
+double kp[8] = {1, 1, 1, 1, 1, 1, 1, 1};
 double ki[8] = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
 //double ki[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 double kd[8] = {0, 0, 0, 0, 0, 0, 0, 0};
