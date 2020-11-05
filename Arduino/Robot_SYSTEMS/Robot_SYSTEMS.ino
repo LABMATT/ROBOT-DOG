@@ -120,10 +120,9 @@ Servo servo_Leg_4;
 //#### ALL LEG VALUES ######
 // Double array of all the values for each elg pid.
 //              1a 1b 2a 2b 3a 3b 4a 4b
-double kp[8] = {1, 1, 1, 1, 1, 1, 1, 1};
-double ki[8] = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1};
-//double ki[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-double kd[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+double kp[8] = {2, 6, 2, 6, 2, 6, 2, 6};
+double ki[8] = {18, 18, 18, 18, 18, 18, 18, 18};
+double kd[8] = {0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01};
 
 double L1Asetpoint = 600, L1AInput, L1AOutput, L1Bsetpoint = 600, L1BInput, L1BOutput;
 PID L1A(&L1AInput, &L1AOutput, &L1Asetpoint, 0, 0, 0, DIRECT);
@@ -133,7 +132,7 @@ double L2Asetpoint = 600, L2AInput, L2AOutput, L2Bsetpoint = 600, L2BInput, L2BO
 PID L2A(&L2AInput, &L2AOutput, &L2Asetpoint, 0, 0, 0, DIRECT);
 PID L2B(&L2BInput, &L2BOutput, &L2Bsetpoint, 0, 0, 0, DIRECT);
 
-double L3Asetpoint = 600, L3AInput, L3AOutput, L3Bsetpoint = 600, L3BInput, L3BOutput;
+double L3Asetpoint = 600, L3AInput, L3AOutput, L3Bsetpoint = 400, L3BInput, L3BOutput;
 PID L3A(&L3AInput, &L3AOutput, &L3Asetpoint, 0, 0, 0, DIRECT);
 PID L3B(&L3BInput, &L3BOutput, &L3Bsetpoint, 0, 0, 0, DIRECT);
 
@@ -195,41 +194,3 @@ lcservos(1, 90);
 lcservos(2, 90);
 delay(1500);
 }
-
-
-/*
-void pop()
-{
-  Input = potRead(1,'A');
-  
-
-if(Input > Setpoint + play || Input < Setpoint - play )
-{
-  myPID.Compute();
-  
-  Serial.println(Output);
-  if(Output < 0)
-  {
-    
-  analogWrite(L1Apwm, (255 - (Output * -1)));
-  digitalWrite(L1An, HIGH);
-  } else if(Output > 0)
-  {
-
-  analogWrite(L1Apwm, Output);
-  digitalWrite(L1An, LOW); 
-  }else
-  {
-  analogWrite(L1Apwm, 0);
-  digitalWrite(L1An, LOW); 
-  }
-}else
-  {
-  analogWrite(L1Apwm, 0);
-  digitalWrite(L1An, LOW); 
-  }
-
-piupdate("mL1A:", Output);
-Serial.println("_OUTPOP");
-}
-*/

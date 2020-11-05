@@ -63,6 +63,9 @@ for(int i = 66; i < 78;i++)
   Serial.println(i);
 }
 
+//TEPORY FOR PHOTO SET LEG STRIGHT
+c_buffer[73] = 500;
+
 Serial.begin(2000000);
 //Serial.setTimeout(50);
 
