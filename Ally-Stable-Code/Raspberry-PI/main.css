@@ -1,0 +1,50 @@
+body {
+    background-color:gray;
+     margin: 1%;
+     font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  table,th,td {
+    border: 2px solid black;
+    border-collapse: collapse;
+  }
+  
+  th,td{
+      padding: 10px;
+  }
+  
+  #headertab {
+    background-color: BLACK;
+    color: white;
+    font-weight: bold;
+  }
+  
+  #displayDef{
+    background-color: RED;
+    color: white;
+  }
+
+  .commandline {
+    float: right;
+    background-color: BLACK;
+    color: white;    
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+    padding: 1%;
+    margin: 0%;
+    width: 16%;
+    height: 100%;
+
+  }
+
+.legstat 
+{
+float: left;
+width: 80%;
+position: static;
+}
+
+#pidctl 
+{
+  background-color: Red;
+}

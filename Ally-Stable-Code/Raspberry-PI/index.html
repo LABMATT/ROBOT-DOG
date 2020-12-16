@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="main.css">
+
+  
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/scoketMangerWP.js"></script>
+  <script src="/Chart.js"></script>
+</head>
+
+<body>
+
+<div class="commandline">
+  <p id="cm10">-</p>
+  <p id="cm9">-</p>
+  <p id="cm8">-</p>
+  <p id="cm7">-</p>
+  <p id="cm6">-</p>
+  <p id="cm5">-</p>
+  <p id="cm4">-</p>
+  <p id="cm3">-</p>
+  <p id="cm2">-</p>
+  <p id="cm1">avr ></p>
+  <input type="text" id="commandbox">
+  <button id="sendbutton" onclick="sendCommand()">Send</button>
+
+ <div id="pidctl">
+ <p>Angle</p>
+ <input type="text" id="L1angle">
+ <button onclick="updatePID(0)">Update PID</button>
+ <p>Kp</p>
+ <input type="text" id="kp">
+ <button onclick="updatePID(1)">Update PID</button>
+ <p>Ki</p>
+ <input type="text" id="ki">
+ <button onclick="updatePID(2)">Update PID</button>
+ <p>Kd</p>
+ <input type="text" id="kd">
+ <button onclick="updatePID(3)">Update PID</button>
+ <button onclick="command('pi_online')">Activate Robot</button>
+ </div>
+
+
+</div>
+
+<script>
+  var input = document.getElementById("commandbox");
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("sendbutton").click();
+  }
+});
+</script>
+
+<div class="legstat">
+<!-- LEG 1-->
+<h4>LEG-1:</h4>
+<table style="width:100%">
+  <tr id="headertab">
+    <th>LEGPART</th>
+    <th>ONLINE</th>
+    <th>PWM</th>
+    <th>CurrentAngle</th>
+    <th>SetAngle</th>
+    <th>CurretPOT</th>
+    <th>SetPOT</th>
+    <th>0-pot</th>
+    <th>90-pot</th>
+    <th>180-pot</th>
+    <th>Kp</th>
+    <th>Ki</th>
+    <th>Kd</th>
+  </tr>
+  <tr id="displayDef">
+    <th>A</th>
+    <th id="42">Na</th>
+    <th id="78">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="54">Na</th>
+    <th id="66">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="aL1AKp">Na</th>
+    <th id="aL1AKi">Na</th>
+    <th id="aL1AKd">Na</th>
+    </tr>
+  </tr>
+  <tr id="displayDef">
+    <th>B</th>
+    <th id="43">Na</th>
+    <th id="79">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="55">Na</th>
+    <th id="67">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="aL1BKp">Na</th>
+    <th id="aL1BKi">Na</th>
+    <th id="aL1BKd">Na</th>
+    </tr>
+  </tr>
+  <tr id="displayDef">
+    <th>C</th>
+    <th id="44">Na</th>
+    <th id="">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="56">Na</th>
+    <th id="68">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="aL1CKp">Na</th>
+    <th id="aL1CKi">Na</th>
+    <th id="aL1CKd">Na</th>
+    </tr>
+</table>
+
+
+
+<!-- LEG 2-->
+
+<h4>LEG-2:</h4>
+  <table style="width:100%">
+    <tr id="headertab">
+      <th>LEGPART</th>
+      <th>ONLINE</th>
+      <th>PWM</th>
+      <th>CurrentAngle</th>
+      <th>SetAngle</th>
+      <th>CurretPOT</th>
+      <th>SetPOT</th>
+      <th>0-pot</th>
+      <th>90-pot</th>
+      <th>180-pot</th>
+    </tr>
+    <tr id="displayDef">
+      <th>A</th>
+      <th id="45">Na</th>
+      <th id="80">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="57">Na</th>
+      <th id="69">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>B</th>
+      <th id="46">Na</th>
+      <th id="81">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="58">Na</th>
+      <th id="70">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>C</th>
+      <th id="47">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="59">Na</th>
+      <th id="71">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+  </table>
+
+  <!-- LEG 3-->
+
+<h4>LEG-3:</h4>
+  <table style="width:100%">
+    <tr id="headertab">
+      <th>LEGPART</th>
+      <th>ONLINE</th>
+      <th>PWM</th>
+      <th>CurrentAngle</th>
+      <th>SetAngle</th>
+      <th>CurretPOT</th>
+      <th>SetPOT</th>
+      <th>0-pot</th>
+      <th>90-pot</th>
+      <th>180-pot</th>
+    </tr>
+    <tr id="displayDef">
+      <th>A</th>
+      <th id="48">Na</th>
+      <th id="82">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="60">Na</th>
+      <th id="72">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>B</th>
+      <th id="49">Na</th>
+      <th id="83">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="61">Na</th>
+      <th id="73">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>C</th>
+      <th id="50">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="62">Na</th>
+      <th id="74">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+  </table>
+
+
+   <!-- LEG 4-->
+
+ <h4>LEG-4:</h4>
+  <table style="width:100%">
+    <tr id="headertab">
+      <th>LEGPART</th>
+      <th>ONLINE</th>
+      <th>PWM</th>
+      <th>CurrentAngle</th>
+      <th>SetAngle</th>
+      <th>CurretPOT</th>
+      <th>SetPOT</th>
+      <th>0-pot</th>
+      <th>90-pot</th>
+      <th>180-pot</th>
+    </tr>
+    <tr id="displayDef">
+      <th>A</th>
+      <th id="51">Na</th>
+      <th id="84">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="63">Na</th>
+      <th id="75">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>B</th>
+      <th id="52">Na</th>
+      <th id="85">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="64">Na</th>
+      <th id="76">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>C</th>
+      <th id="53">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="65">Na</th>
+      <th id="77">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+  </table>
+
+</div>
+
+
+<!--
+<canvas id="myChart" width="10" height="10" style="background-color: #f00; position: static; margin: 2%;"></canvas>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+
+var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+      datasets: [{
+        label: "pos",
+        borderColor: "#FF0000",
+        fill: false,
+        data: [2, 2 , 4, 8, 3, 6, 3],
+      }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: 'LEG ATRABUTES OVER 10s',
+        }
+    }
+});
+
+ </script>
+-->
+
+</body>
+</html>
