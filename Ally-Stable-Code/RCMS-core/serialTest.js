@@ -1,0 +1,7 @@
+const SerialPort = require('/usr/local/lib/node_modules/serialport')
+const Readline = require('@serialport/parser-readline')
+const port = new SerialPort('/dev/ttyAMA0')
+const parser = new Readline()
+port.pipe(parser)
+parser.on('data', console.log)
+port.write('pi_online\n')

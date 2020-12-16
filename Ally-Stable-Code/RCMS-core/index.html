@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="main.css">
+
+  
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/scoketMangerWP.js"></script>
+</head>
+
+<body>
+
+<div class="commandline">
+  <p id="cm10">-</p>
+  <p id="cm9">-</p>
+  <p id="cm8">-</p>
+  <p id="cm7">-</p>
+  <p id="cm6">-</p>
+  <p id="cm5">-</p>
+  <p id="cm4">-</p>
+  <p id="cm3">-</p>
+  <p id="cm2">-</p>
+  <p id="cm1">avr ></p>
+  <input type="text" id="commandbox">
+  <button id="sendbutton" onclick="sendCommand()">Send</button>
+
+ <div id="pidctl">
+ <p>Angle</p>
+ <input type="text" id="L1angle">
+ <button onclick="updatePID(0)">Update PID</button>
+ <p>Kp</p>
+ <input type="text" id="kp">
+ <button onclick="updatePID(1)">Update PID</button>
+ <p>Ki</p>
+ <input type="text" id="ki">
+ <button onclick="updatePID(2)">Update PID</button>
+ <p>Kd</p>
+ <input type="text" id="kd">
+ <button onclick="updatePID(3)">Update PID</button>
+ <button onclick="command('pi_online')">Activate Robot</button>
+ </div>
+</div>
+
+<script>
+  var input = document.getElementById("commandbox");
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("sendbutton").click();
+  }
+});
+</script>
+
+<div class="legstat">
+<!-- LEG 1-->
+<h4>LEG-1:</h4>
+<table style="width:100%">
+  <tr id="headertab">
+    <th>LEGPART</th>
+    <th>ONLINE</th>
+    <th>PWM</th>
+    <th>CurrentAngle</th>
+    <th>SetAngle</th>
+    <th>CurretPOT</th>
+    <th>SetPOT</th>
+    <th>0-pot</th>
+    <th>90-pot</th>
+    <th>180-pot</th>
+    <th>Kp</th>
+    <th>Ki</th>
+    <th>Kd</th>
+  </tr>
+  <tr id="displayDef">
+    <th>A</th>
+    <th id="eL1A">Na</th>
+    <th id="mL1A">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="pL1A">Na</th>
+    <th id="sL1A">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="aL1AKp">Na</th>
+    <th id="aL1AKi">Na</th>
+    <th id="aL1AKd">Na</th>
+    </tr>
+  </tr>
+  <tr id="displayDef">
+    <th>B</th>
+    <th id="eL1B">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="pL1B">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="aL1BKp">Na</th>
+    <th id="aL1BKi">Na</th>
+    <th id="aL1BKd">Na</th>
+    </tr>
+  </tr>
+  <tr id="displayDef">
+    <th>C</th>
+    <th id="eL1C">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="pL1C">Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th>Na</th>
+    <th id="aL1CKp">Na</th>
+    <th id="aL1CKi">Na</th>
+    <th id="aL1CKd">Na</th>
+    </tr>
+</table>
+
+
+
+<!-- LEG 2-->
+
+<h4>LEG-2:</h4>
+  <table style="width:100%">
+    <tr id="headertab">
+      <th>LEGPART</th>
+      <th>ONLINE</th>
+      <th>PWM</th>
+      <th>CurrentAngle</th>
+      <th>SetAngle</th>
+      <th>CurretPOT</th>
+      <th>SetPOT</th>
+      <th>0-pot</th>
+      <th>90-pot</th>
+      <th>180-pot</th>
+    </tr>
+    <tr id="displayDef">
+      <th>A</th>
+      <th id="eL2A">Na</th>
+      <th id="L2pwm">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="pL2A">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>B</th>
+      <th id="eL2B">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="pL2B">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>C</th>
+      <th id="eL2C">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="pL2C">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+  </table>
+
+  <!-- LEG 3-->
+
+<h4>LEG-3:</h4>
+  <table style="width:100%">
+    <tr id="headertab">
+      <th>LEGPART</th>
+      <th>ONLINE</th>
+      <th>PWM</th>
+      <th>CurrentAngle</th>
+      <th>SetAngle</th>
+      <th>CurretPOT</th>
+      <th>SetPOT</th>
+      <th>0-pot</th>
+      <th>90-pot</th>
+      <th>180-pot</th>
+    </tr>
+    <tr id="displayDef">
+      <th>A</th>
+      <th id="eL3A">Na</th>
+      <th id="L3pwm">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="pL3A">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>B</th>
+      <th id="eL3B">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="pL3B">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>C</th>
+      <th id="eL3C">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="pL3C">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+  </table>
+
+
+   <!-- LEG 4-->
+
+ <h4>LEG-4:</h4>
+  <table style="width:100%">
+    <tr id="headertab">
+      <th>LEGPART</th>
+      <th>ONLINE</th>
+      <th>PWM</th>
+      <th>CurrentAngle</th>
+      <th>SetAngle</th>
+      <th>CurretPOT</th>
+      <th>SetPOT</th>
+      <th>0-pot</th>
+      <th>90-pot</th>
+      <th>180-pot</th>
+    </tr>
+    <tr id="displayDef">
+      <th>A</th>
+      <th id="eL4A">Na</th>
+      <th id="L4pwm">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="pL4A">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>B</th>
+      <th id="eL4B">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="pL4B">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+    </tr>
+    <tr id="displayDef">
+      <th>C</th>
+      <th id="eL4C">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th id="pL4C">Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      <th>Na</th>
+      </tr>
+  </table>
+</div>
+
+</body>
+</html>
