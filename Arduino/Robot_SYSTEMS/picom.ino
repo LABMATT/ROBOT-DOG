@@ -82,6 +82,12 @@ void picom()
       case 106:
       pidUpdate(106);
       break;
+      case 107: 
+      wave();
+      break;
+      case 108: 
+      wave();
+      break;
     }
   }
 }

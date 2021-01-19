@@ -520,4 +520,30 @@ if(input > setpoint + play || input < setpoint - play )
   digitalWrite(neg, LOW); 
   }
   }
+
+wave();
+  
+
+// if 250 then invert dir
+if(c_buffer[69] < 100)
+{
+  dirTog = true;
+}
+else if(c_buffer[69] > 800) // Move oposite once reach max angle.
+{
+ dirTog = false; 
+}
+
+// Subtract 10 from setpoint for each loop.
+if(dirTog == false)
+{
+  c_buffer[69] = c_buffer[69] - 10;
+} else if (dirTog == true) // Add 10 to set point each loop.
+{
+  c_buffer[69] = c_buffer[69] + 10;
+}
+
+
+// Set B axis to solid for wave program.
+c_buffer[70] = 800;
 }

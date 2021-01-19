@@ -144,6 +144,9 @@ PID L4B(&L4BInput, &L4BOutput, &L4Bsetpoint, 0, 0, 0, DIRECT);
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 5;    // how many points to fade the LED by
 
+// Temp bool for direction of dog leg.
+boolean dirTog = false;
+
 void setup() {
   
 ini();
@@ -152,6 +155,7 @@ piWD();
 
 setupPID();
 
+// Enable all legs to get running
 enableLegs(true);
 }
 
@@ -165,6 +169,8 @@ picom();
 
 updateLEGS();
 //pop();
+
+wave();
 
 delay(50);
 }
@@ -193,4 +199,41 @@ delay(1500);
 lcservos(1, 90);
 lcservos(2, 90);
 delay(1500);
+}
+
+boolean waveTog;
+
+void wave(boolean tog)
+{
+waveTog = tog;
+if(waveTog == true)
+{
+  
+}
+enableLegs(false); // disable all legs for top designs filming.
+
+legEnable(2, true); // enable leg 2 to wave.
+
+// if 250 then invert dir
+if(c_buffer[69] < 100)
+{
+  dirTog = true;
+}
+else if(c_buffer[69] > 800) // Move oposite once reach max angle.
+{
+ dirTog = false; 
+}
+
+// Subtract 10 from setpoint for each loop.
+if(dirTog == false)
+{
+  c_buffer[69] = c_buffer[69] - 10;
+} else if (dirTog == true) // Add 10 to set point each loop.
+{
+  c_buffer[69] = c_buffer[69] + 10;
+}
+
+
+// Set B axis to solid for wave program.
+c_buffer[70] = 800;
 }
